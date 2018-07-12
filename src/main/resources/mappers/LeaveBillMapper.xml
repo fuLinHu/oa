@@ -31,7 +31,7 @@
 			#{id},#{leaveDate},#{days},#{content},#{state},#{remark},#{userId}
 		)
 	</insert>
-	<update id="updateLeaveBill" parameterType="com.fairy.activiti.entity.LeaveBill">
+	<update id="updateLeaveBill" parameterType="com.hacker.oa.entity.LeaveBill">
 		update t_leave 
 		<set>
 			<if test="id != null and id != ''">
