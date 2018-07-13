@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hacker.oa.dao.TVacationDao">
+
+	<!-- 通过唯一索引单表查询 -->
+	<select id="getById" parameterType="Integer" resultMap="tVacationMapper">
+		select <include refid="selectColumns"/>
+		from t_vacation tv
+		where tv.ID = #{id}
+    </select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="TVacation">
+		insert into t_vacation(
+			ID,
+			APPLY_DATE,
+			BEGIN_DATE,
+			WORK_DAYS,
+			END_DATE,
+			PROC_INST_ID,
+			REASON,
+			STATUS,
+			USER_ID,
+			VAC_TYPE
+		)values(
+			#{id},
+			#{applyDate},
+			#{beginDate},
+			#{workDays},
+			#{endDate},
+			#{procInstId},
+			#{reason},
+			#{status},
+			#{userId},
+			#{vacType}
+		)
+	</insert>
+
+    <!-- 更新所有数据 -->
+	<update id="updateById" parameterType="TVacation">
+		update t_vacation set
+			APPLY_DATE = #{applyDate},
+			BEGIN_DATE = #{beginDate},
+			WORK_DAYS = #{workDays},
+			END_DATE = #{endDate},
+			PROC_INST_ID = #{procInstId},
+			REASON = #{reason},
+			STATUS = #{status},
+			USER_ID = #{userId},
+			VAC_TYPE = #{vacType}
+        where ID = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="Integer">
+		delete from t_vacation where ID = #{id}
+	</delete>
+    <!-- 单表分页查询 -->
+	<select id="findByTVacationWhere" parameterType="TVacationWhere" resultMap="tVacationMapper">
+		select <include refid="selectColumns"/> from t_vacation tv
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findTotalByTVacationWhere" parameterType="TVacationWhere" resultType="Long">
+		select count(*) from t_vacation tv
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+    </select>
+
+	<resultMap id="tVacationMapper" type="TVacation">
+        <id property="id" column="tv_ID"/>
+        <result property="applyDate" column="tv_APPLY_DATE"/>
+        <result property="beginDate" column="tv_BEGIN_DATE"/>
+        <result property="workDays" column="tv_WORK_DAYS"/>
+        <result property="endDate" column="tv_END_DATE"/>
+        <result property="procInstId" column="tv_PROC_INST_ID"/>
+        <result property="reason" column="tv_REASON"/>
+        <result property="status" column="tv_STATUS"/>
+        <result property="userId" column="tv_USER_ID"/>
+        <result property="vacType" column="tv_VAC_TYPE"/>
+	</resultMap>
+
+	<sql id="selectColumns">
+		tv.ID tv_ID,
+		tv.APPLY_DATE tv_APPLY_DATE,
+		tv.BEGIN_DATE tv_BEGIN_DATE,
+		tv.WORK_DAYS tv_WORK_DAYS,
+		tv.END_DATE tv_END_DATE,
+		tv.PROC_INST_ID tv_PROC_INST_ID,
+		tv.REASON tv_REASON,
+		tv.STATUS tv_STATUS,
+		tv.USER_ID tv_USER_ID,
+		tv.VAC_TYPE tv_VAC_TYPE
+	</sql>
+
+	<sql id="defaultDyamicWhere">
+		<if test="id != null"> AND tv.ID = #{id}</if>
+		<if test="applyDate != null"> AND tv.APPLY_DATE &gt;= #{applyDate}</if>
+		<if test="startApplyDate != null"> AND tv.APPLY_DATE &gt;= #{startApplyDate}</if>
+		<if test="endApplyDate != null"> AND tv.APPLY_DATE &lt;= #{endApplyDate}</if>
+		<if test="beginDate != null"> AND tv.BEGIN_DATE &gt;= #{beginDate}</if>
+		<if test="startBeginDate != null"> AND tv.BEGIN_DATE &gt;= #{startBeginDate}</if>
+		<if test="endBeginDate != null"> AND tv.BEGIN_DATE &lt;= #{endBeginDate}</if>
+		<if test="workDays != null"> AND tv.WORK_DAYS = #{workDays}</if>
+		<if test="endDate != null"> AND tv.END_DATE &gt;= #{endDate}</if>
+		<if test="startEndDate != null"> AND tv.END_DATE &gt;= #{startEndDate}</if>
+		<if test="endEndDate != null"> AND tv.END_DATE &lt;= #{endEndDate}</if>
+		<if test="procInstId != null and procInstId != ''"> AND tv.PROC_INST_ID = #{procInstId}</if>
+		<if test="reason != null and reason != ''"> AND tv.REASON = #{reason}</if>
+		<if test="status != null and status != ''"> AND tv.STATUS = #{status}</if>
+		<if test="userId != null"> AND tv.USER_ID = #{userId}</if>
+		<if test="vacType != null"> AND tv.VAC_TYPE = #{vacType}</if>
+
+	</sql>
+
+</mapper>

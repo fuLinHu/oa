@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:fragment = "basejscss">
-    <link  rel="stylesheet" type="text/css" href="/oa/js/public/easyui/themes/gray/easyui.css" />
-    <link  rel="stylesheet" type="text/css" href="/oa/js/public/easyui/themes/icon.css" />
-    <script src="/oa/js/public/easyui/jquery.min.js"></script>
-    <script src="/oa/js/public/easyui/jquery.easyui.min.js"></script>
-    <script src="/oa/js/public/easyui/jquery.edatagrid.js"></script>
-</head>
+    <head th:fragment = "basejscss">
+        <link  rel="stylesheet" type="text/css" th:href="@{/oa/js/public/easyui/themes/gray/easyui.css}" />
+        <link  rel="stylesheet" type="text/css" th:href="@{/oa/js/public/easyui/themes/icon.css}" />
+        <link  rel="stylesheet" type="text/css" th:href="@{/oa/js/public/zTree_v3/css/zTreeStyle/zTreeStyle.css}" />
+        <script th:src="@{/oa/js/public/easyui/jquery.min.js}"></script>
+        <script th:src="@{/oa/js/public/easyui/jquery.easyui.min.js}"></script>
+        <script th:src="@{/oa/js/public/easyui/jquery.edatagrid.js}"></script>
+        <script th:src="@{/oa/js/public/zTree_v3/js/jquery.ztree.core.js}"></script>
+    </head>
 </html>

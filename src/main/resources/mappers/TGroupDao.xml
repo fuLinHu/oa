@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hacker.oa.dao.TGroupDao">
+
+	<!-- 通过唯一索引单表查询 -->
+	<select id="getByGroupId" parameterType="Integer" resultMap="tGroupMapper">
+		select <include refid="selectColumns"/>
+		from t_group tg
+		where tg.GROUP_ID = #{groupId}
+    </select>
+
+    <!-- 通过唯一索引查询， 关联查询多对一中多方TUser数据 -->
+    <select id="getJoinTUserByGroupId" parameterType="Integer" resultMap="selectJoinTUserMapper">
+		select <include refid="selectColumns"/>, <include refid="com.hacker.oa.dao.TUserDao.selectColumns"/>
+		from t_group tg
+		left join t_user tu on tg.GROUP_ID = tu.GROUP_ID
+    	where tg.GROUP_ID = #{groupId}
+	</select>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="groupId" parameterType="TGroup">
+		insert into t_group(
+			GROUP_ID,
+			NAME,
+			TYPE
+		)values(
+			#{groupId},
+			#{name},
+			#{type}
+		)
+	</insert>
+
+    <!-- 更新所有数据 -->
+	<update id="updateByGroupId" parameterType="TGroup">
+		update t_group set
+			NAME = #{name},
+			TYPE = #{type}
+        where GROUP_ID = #{groupId}
+	</update>
+
+	<delete id="deleteByGroupId" parameterType="Integer">
+		delete from t_group where GROUP_ID = #{id}
+	</delete>
+    <!-- 单表分页查询 -->
+	<select id="findByTGroupWhere" parameterType="TGroupWhere" resultMap="tGroupMapper">
+		select <include refid="selectColumns"/> from t_group tg
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findTotalByTGroupWhere" parameterType="TGroupWhere" resultType="Long">
+		select count(*) from t_group tg
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+    </select>
+
+	<resultMap id="tGroupMapper" type="TGroup">
+        <id property="groupId" column="tg_GROUP_ID"/>
+        <result property="name" column="tg_NAME"/>
+        <result property="type" column="tg_TYPE"/>
+	</resultMap>
+
+	<resultMap id="selectJoinTUserMapper" type="TGroup" extends="tGroupMapper">
+		<collection property="TUsers" ofType="TUser"
+			resultMap="com.hacker.oa.dao.TUserDao.tUserMapper">
+
+		</collection>
+	</resultMap>
+
+	<sql id="selectColumns">
+		tg.GROUP_ID tg_GROUP_ID,
+		tg.NAME tg_NAME,
+		tg.TYPE tg_TYPE
+	</sql>
+
+	<sql id="defaultDyamicWhere">
+		<if test="groupId != null"> AND tg.GROUP_ID = #{groupId}</if>
+		<if test="name != null and name != ''"> AND tg.NAME = #{name}</if>
+		<if test="type != null and type != ''"> AND tg.TYPE = #{type}</if>
+
+	</sql>
+
+</mapper>

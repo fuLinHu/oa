@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @MapperScan("com.hacker.oa.dao")
-//@ComponentScan({"com.hacker"})
 public class OaApplication {
 
 	public static void main(String[] args) {

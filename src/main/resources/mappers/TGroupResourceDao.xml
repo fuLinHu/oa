@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hacker.oa.dao.TGroupResourceDao">
+
+	<!-- 通过唯一索引单表查询 -->
+	<select id="getById" parameterType="Integer" resultMap="tGroupResourceMapper">
+		select <include refid="selectColumns"/>
+		from t_group_resource tgr
+		where tgr.Id = #{id}
+    </select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="TGroupResource">
+		insert into t_group_resource(
+			Id,
+			group_id,
+			resource_id
+		)values(
+			#{id},
+			#{groupId},
+			#{resourceId}
+		)
+	</insert>
+
+    <!-- 更新所有数据 -->
+	<update id="updateById" parameterType="TGroupResource">
+		update t_group_resource set
+			group_id = #{groupId},
+			resource_id = #{resourceId}
+        where Id = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="Integer">
+		delete from t_group_resource where Id = #{id}
+	</delete>
+    <!-- 单表分页查询 -->
+	<select id="findByTGroupResourceWhere" parameterType="TGroupResourceWhere" resultMap="tGroupResourceMapper">
+		select <include refid="selectColumns"/> from t_group_resource tgr
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findTotalByTGroupResourceWhere" parameterType="TGroupResourceWhere" resultType="Long">
+		select count(*) from t_group_resource tgr
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+    </select>
+
+	<resultMap id="tGroupResourceMapper" type="TGroupResource">
+        <id property="id" column="tgr_Id"/>
+        <result property="groupId" column="tgr_group_id"/>
+        <result property="resourceId" column="tgr_resource_id"/>
+	</resultMap>
+
+	<sql id="selectColumns">
+		tgr.Id tgr_Id,
+		tgr.group_id tgr_group_id,
+		tgr.resource_id tgr_resource_id
+	</sql>
+
+	<sql id="defaultDyamicWhere">
+		<if test="id != null"> AND tgr.Id = #{id}</if>
+		<if test="groupId != null"> AND tgr.group_id = #{groupId}</if>
+		<if test="resourceId != null"> AND tgr.resource_id = #{resourceId}</if>
+
+	</sql>
+
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hacker.oa.dao.TExpenseAccountDao">
+
+	<!-- 通过唯一索引单表查询 -->
+	<select id="getById" parameterType="Integer" resultMap="tExpenseAccountMapper">
+		select <include refid="selectColumns"/>
+		from t_expense_account tea
+		where tea.ID = #{id}
+    </select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="TExpenseAccount">
+		insert into t_expense_account(
+			ID,
+			DATE,
+			MONEY,
+			PROC_INST_ID,
+			USER_ID,
+			APPLY_DATE,
+			OCCUR_DATE,
+			REMARK,
+			STATUS
+		)values(
+			#{id},
+			#{date},
+			#{money},
+			#{procInstId},
+			#{userId},
+			#{applyDate},
+			#{occurDate},
+			#{remark},
+			#{status}
+		)
+	</insert>
+
+    <!-- 更新所有数据 -->
+	<update id="updateById" parameterType="TExpenseAccount">
+		update t_expense_account set
+			DATE = #{date},
+			MONEY = #{money},
+			PROC_INST_ID = #{procInstId},
+			USER_ID = #{userId},
+			APPLY_DATE = #{applyDate},
+			OCCUR_DATE = #{occurDate},
+			REMARK = #{remark},
+			STATUS = #{status}
+        where ID = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="Integer">
+		delete from t_expense_account where ID = #{id}
+	</delete>
+    <!-- 单表分页查询 -->
+	<select id="findByTExpenseAccountWhere" parameterType="TExpenseAccountWhere" resultMap="tExpenseAccountMapper">
+		select <include refid="selectColumns"/> from t_expense_account tea
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findTotalByTExpenseAccountWhere" parameterType="TExpenseAccountWhere" resultType="Long">
+		select count(*) from t_expense_account tea
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+    </select>
+
+	<resultMap id="tExpenseAccountMapper" type="TExpenseAccount">
+        <id property="id" column="tea_ID"/>
+        <result property="date" column="tea_DATE"/>
+        <result property="money" column="tea_MONEY"/>
+        <result property="procInstId" column="tea_PROC_INST_ID"/>
+        <result property="userId" column="tea_USER_ID"/>
+        <result property="applyDate" column="tea_APPLY_DATE"/>
+        <result property="occurDate" column="tea_OCCUR_DATE"/>
+        <result property="remark" column="tea_REMARK"/>
+        <result property="status" column="tea_STATUS"/>
+	</resultMap>
+
+	<sql id="selectColumns">
+		tea.ID tea_ID,
+		tea.DATE tea_DATE,
+		tea.MONEY tea_MONEY,
+		tea.PROC_INST_ID tea_PROC_INST_ID,
+		tea.USER_ID tea_USER_ID,
+		tea.APPLY_DATE tea_APPLY_DATE,
+		tea.OCCUR_DATE tea_OCCUR_DATE,
+		tea.REMARK tea_REMARK,
+		tea.STATUS tea_STATUS
+	</sql>
+
+	<sql id="defaultDyamicWhere">
+		<if test="id != null"> AND tea.ID = #{id}</if>
+		<if test="date != null"> AND tea.DATE &gt;= #{date}</if>
+		<if test="startDate != null"> AND tea.DATE &gt;= #{startDate}</if>
+		<if test="endDate != null"> AND tea.DATE &lt;= #{endDate}</if>
+		<if test="money != null"> AND tea.MONEY = #{money}</if>
+		<if test="procInstId != null and procInstId != ''"> AND tea.PROC_INST_ID = #{procInstId}</if>
+		<if test="userId != null and userId != ''"> AND tea.USER_ID = #{userId}</if>
+		<if test="applyDate != null"> AND tea.APPLY_DATE &gt;= #{applyDate}</if>
+		<if test="startApplyDate != null"> AND tea.APPLY_DATE &gt;= #{startApplyDate}</if>
+		<if test="endApplyDate != null"> AND tea.APPLY_DATE &lt;= #{endApplyDate}</if>
+		<if test="occurDate != null"> AND tea.OCCUR_DATE &gt;= #{occurDate}</if>
+		<if test="startOccurDate != null"> AND tea.OCCUR_DATE &gt;= #{startOccurDate}</if>
+		<if test="endOccurDate != null"> AND tea.OCCUR_DATE &lt;= #{endOccurDate}</if>
+		<if test="remark != null and remark != ''"> AND tea.REMARK = #{remark}</if>
+		<if test="status != null and status != ''"> AND tea.STATUS = #{status}</if>
+
+	</sql>
+
+</mapper>

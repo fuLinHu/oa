@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hacker.oa.dao.TUserTaskDao">
+
+	<!-- 通过唯一索引单表查询 -->
+	<select id="getById" parameterType="Integer" resultMap="tUserTaskMapper">
+		select <include refid="selectColumns"/>
+		from t_user_task tut
+		where tut.ID = #{id}
+    </select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="TUserTask">
+		insert into t_user_task(
+			ID,
+			PROC_DEF_KEY,
+			PROC_DEF_NAME,
+			TASK_DEF_KEY,
+			TASK_NAME,
+			TASK_TYPE,
+			CANDIDATE_NAME,
+			CANDIDATE_IDS
+		)values(
+			#{id},
+			#{procDefKey},
+			#{procDefName},
+			#{taskDefKey},
+			#{taskName},
+			#{taskType},
+			#{candidateName},
+			#{candidateIds}
+		)
+	</insert>
+
+    <!-- 更新所有数据 -->
+	<update id="updateById" parameterType="TUserTask">
+		update t_user_task set
+			PROC_DEF_KEY = #{procDefKey},
+			PROC_DEF_NAME = #{procDefName},
+			TASK_DEF_KEY = #{taskDefKey},
+			TASK_NAME = #{taskName},
+			TASK_TYPE = #{taskType},
+			CANDIDATE_NAME = #{candidateName},
+			CANDIDATE_IDS = #{candidateIds}
+        where ID = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="Integer">
+		delete from t_user_task where ID = #{id}
+	</delete>
+    <!-- 单表分页查询 -->
+	<select id="findByTUserTaskWhere" parameterType="TUserTaskWhere" resultMap="tUserTaskMapper">
+		select <include refid="selectColumns"/> from t_user_task tut
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findTotalByTUserTaskWhere" parameterType="TUserTaskWhere" resultType="Long">
+		select count(*) from t_user_task tut
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+    </select>
+
+	<resultMap id="tUserTaskMapper" type="TUserTask">
+        <id property="id" column="tut_ID"/>
+        <result property="procDefKey" column="tut_PROC_DEF_KEY"/>
+        <result property="procDefName" column="tut_PROC_DEF_NAME"/>
+        <result property="taskDefKey" column="tut_TASK_DEF_KEY"/>
+        <result property="taskName" column="tut_TASK_NAME"/>
+        <result property="taskType" column="tut_TASK_TYPE"/>
+        <result property="candidateName" column="tut_CANDIDATE_NAME"/>
+        <result property="candidateIds" column="tut_CANDIDATE_IDS"/>
+	</resultMap>
+
+	<sql id="selectColumns">
+		tut.ID tut_ID,
+		tut.PROC_DEF_KEY tut_PROC_DEF_KEY,
+		tut.PROC_DEF_NAME tut_PROC_DEF_NAME,
+		tut.TASK_DEF_KEY tut_TASK_DEF_KEY,
+		tut.TASK_NAME tut_TASK_NAME,
+		tut.TASK_TYPE tut_TASK_TYPE,
+		tut.CANDIDATE_NAME tut_CANDIDATE_NAME,
+		tut.CANDIDATE_IDS tut_CANDIDATE_IDS
+	</sql>
+
+	<sql id="defaultDyamicWhere">
+		<if test="id != null"> AND tut.ID = #{id}</if>
+		<if test="procDefKey != null and procDefKey != ''"> AND tut.PROC_DEF_KEY = #{procDefKey}</if>
+		<if test="procDefName != null and procDefName != ''"> AND tut.PROC_DEF_NAME = #{procDefName}</if>
+		<if test="taskDefKey != null and taskDefKey != ''"> AND tut.TASK_DEF_KEY = #{taskDefKey}</if>
+		<if test="taskName != null and taskName != ''"> AND tut.TASK_NAME = #{taskName}</if>
+		<if test="taskType != null and taskType != ''"> AND tut.TASK_TYPE = #{taskType}</if>
+		<if test="candidateName != null and candidateName != ''"> AND tut.CANDIDATE_NAME = #{candidateName}</if>
+		<if test="candidateIds != null and candidateIds != ''"> AND tut.CANDIDATE_IDS = #{candidateIds}</if>
+
+	</sql>
+
+</mapper>

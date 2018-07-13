@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hacker.oa.dao.TUserDao">
+
+	<!-- 通过唯一索引单表查询 -->
+	<select id="getByUserId" parameterType="Integer" resultMap="tUserMapper">
+		select <include refid="selectColumns"/>
+		from t_user tu
+		where tu.USER_ID = #{userId}
+    </select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="TUser">
+		insert into t_user(
+			USER_ID,
+			USER_NAME,
+			USER_PWD,
+			REG_DATE,
+			GROUP_ID,
+			LOCKED,
+			USER_SALT
+		)values(
+			#{userId},
+			#{userName},
+			#{userPwd},
+			#{regDate},
+			#{group.groupId, jdbcType=INTEGER},
+			#{locked},
+			#{userSalt}
+		)
+	</insert>
+
+    <!-- 更新所有数据 -->
+	<update id="updateByUserId" parameterType="TUser">
+		update t_user set
+			USER_NAME = #{userName},
+			USER_PWD = #{userPwd},
+			REG_DATE = #{regDate},
+			GROUP_ID = #{group.groupId},
+			LOCKED = #{locked},
+			USER_SALT = #{userSalt}
+        where USER_ID = #{userId}
+	</update>
+
+	<delete id="deleteByUserId" parameterType="Integer">
+		delete from t_user where USER_ID = #{id}
+	</delete>
+    <!-- 单表分页查询 -->
+	<select id="findByTUserWhere" parameterType="TUserWhere" resultMap="tUserMapper">
+		select <include refid="selectColumns"/> from t_user tu
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findTotalByTUserWhere" parameterType="TUserWhere" resultType="Long">
+		select count(*) from t_user tu
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+    </select>
+
+    <!-- 单表关联查询（多对一） -->
+	<select id="findJoinByTUserWhere" parameterType="TUserWhere" resultMap="selectJoinAssociatesMapper">
+		select <include refid="selectColumns"/>  , <include refid="com.hacker.oa.dao.TGroupDao.selectColumns"/>
+		from t_user tu
+		left join t_group tg on tu.GROUP_ID = tg.GROUP_ID
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+			<include refid="joinLeftWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findJoinTotalByTUserWhere" parameterType="TUserWhere" resultType="Long">
+		select count(*)
+		from t_user tu
+		left join t_group tg on tu.GROUP_ID = tg.GROUP_ID
+        <where>
+            <include refid="defaultDyamicWhere"></include>
+            <include refid="joinLeftWhere"></include>
+        </where>
+    </select>
+
+    <resultMap id="baseMapper" type="TUser">
+        <id property="userId" column="tu_USER_ID"/>
+        <result property="userName" column="tu_USER_NAME"/>
+        <result property="userPwd" column="tu_USER_PWD"/>
+        <result property="regDate" column="tu_REG_DATE"/>
+        <result property="locked" column="tu_LOCKED"/>
+        <result property="userSalt" column="tu_USER_SALT"/>
+	</resultMap>
+
+	<resultMap id="tUserMapper" type="TUser" extends="baseMapper">
+        <association property="group" javaType="TGroup">
+	    	<id property="groupId" column="tu_GROUP_ID"/>
+	  	</association>
+	</resultMap>
+
+
+	<resultMap id="selectJoinAssociatesMapper" type="TUser" extends="baseMapper">
+		<association property="group" resultMap="com.hacker.oa.dao.TGroupDao.tGroupMapper"/>
+	</resultMap>
+
+	<sql id="selectColumns">
+		tu.USER_ID tu_USER_ID,
+		tu.USER_NAME tu_USER_NAME,
+		tu.USER_PWD tu_USER_PWD,
+		tu.REG_DATE tu_REG_DATE,
+		tu.GROUP_ID tu_GROUP_ID,
+		tu.LOCKED tu_LOCKED,
+		tu.USER_SALT tu_USER_SALT
+	</sql>
+
+	<sql id="defaultDyamicWhere">
+		<if test="userId != null"> AND tu.USER_ID = #{userId}</if>
+		<if test="userName != null and userName != ''"> AND tu.USER_NAME = #{userName}</if>
+		<if test="userPwd != null and userPwd != ''"> AND tu.USER_PWD = #{userPwd}</if>
+		<if test="regDate != null"> AND tu.REG_DATE &gt;= #{regDate}</if>
+		<if test="startRegDate != null"> AND tu.REG_DATE &gt;= #{startRegDate}</if>
+		<if test="endRegDate != null"> AND tu.REG_DATE &lt;= #{endRegDate}</if>
+		<if test="locked != null"> AND tu.LOCKED = #{locked}</if>
+		<if test="userSalt != null and userSalt != ''"> AND tu.USER_SALT = #{userSalt}</if>
+
+        <if test="group != null and group.groupId != null"> AND tu.GROUP_ID = #{group.groupId}</if>
+	</sql>
+
+	<sql id="joinLeftWhere">
+		<if test="group != null">
+			<if test="group.groupId != null"> AND tg.GROUP_ID = #{group.groupId}</if>
+			<if test="group.name != null"> AND tg.NAME = #{group.name}</if>
+			<if test="group.type != null"> AND tg.TYPE = #{group.type}</if>
+		</if>
+	</sql>
+
+</mapper>

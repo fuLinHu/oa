@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hacker.oa.dao.TSalaryDao">
+
+	<!-- 通过唯一索引单表查询 -->
+	<select id="getById" parameterType="Integer" resultMap="tSalaryMapper">
+		select <include refid="selectColumns"/>
+		from t_salary ts
+		where ts.ID = #{id}
+    </select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="TSalary">
+		insert into t_salary(
+			ID,
+			BASE_MONEY,
+			USER_ID
+		)values(
+			#{id},
+			#{baseMoney},
+			#{userId}
+		)
+	</insert>
+
+    <!-- 更新所有数据 -->
+	<update id="updateById" parameterType="TSalary">
+		update t_salary set
+			BASE_MONEY = #{baseMoney},
+			USER_ID = #{userId}
+        where ID = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="Integer">
+		delete from t_salary where ID = #{id}
+	</delete>
+    <!-- 单表分页查询 -->
+	<select id="findByTSalaryWhere" parameterType="TSalaryWhere" resultMap="tSalaryMapper">
+		select <include refid="selectColumns"/> from t_salary ts
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findTotalByTSalaryWhere" parameterType="TSalaryWhere" resultType="Long">
+		select count(*) from t_salary ts
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+    </select>
+
+	<resultMap id="tSalaryMapper" type="TSalary">
+        <id property="id" column="ts_ID"/>
+        <result property="baseMoney" column="ts_BASE_MONEY"/>
+        <result property="userId" column="ts_USER_ID"/>
+	</resultMap>
+
+	<sql id="selectColumns">
+		ts.ID ts_ID,
+		ts.BASE_MONEY ts_BASE_MONEY,
+		ts.USER_ID ts_USER_ID
+	</sql>
+
+	<sql id="defaultDyamicWhere">
+		<if test="id != null"> AND ts.ID = #{id}</if>
+		<if test="baseMoney != null"> AND ts.BASE_MONEY = #{baseMoney}</if>
+		<if test="userId != null and userId != ''"> AND ts.USER_ID = #{userId}</if>
+
+	</sql>
+
+</mapper>

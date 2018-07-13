@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hacker.oa.dao.TResourceDao">
+
+	<!-- 通过唯一索引单表查询 -->
+	<select id="getById" parameterType="Integer" resultMap="tResourceMapper">
+		select <include refid="selectColumns"/>
+		from t_resource tr
+		where tr.id = #{id}
+    </select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="TResource">
+		insert into t_resource(
+			id,
+			name,
+			type,
+			url,
+			parent_id,
+			parent_ids,
+			permission,
+			available
+		)values(
+			#{id},
+			#{name},
+			#{type},
+			#{url},
+			#{parentId},
+			#{parentIds},
+			#{permission},
+			#{available}
+		)
+	</insert>
+
+    <!-- 更新所有数据 -->
+	<update id="updateById" parameterType="TResource">
+		update t_resource set
+			name = #{name},
+			type = #{type},
+			url = #{url},
+			parent_id = #{parentId},
+			parent_ids = #{parentIds},
+			permission = #{permission},
+			available = #{available}
+        where id = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="Integer">
+		delete from t_resource where id = #{id}
+	</delete>
+    <!-- 单表分页查询 -->
+	<select id="findByTResourceWhere" parameterType="TResourceWhere" resultMap="tResourceMapper">
+		select <include refid="selectColumns"/> from t_resource tr
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findTotalByTResourceWhere" parameterType="TResourceWhere" resultType="Long">
+		select count(*) from t_resource tr
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+    </select>
+
+	<resultMap id="tResourceMapper" type="TResource">
+        <id property="id" column="tr_id"/>
+        <result property="name" column="tr_name"/>
+        <result property="type" column="tr_type"/>
+        <result property="url" column="tr_url"/>
+        <result property="parentId" column="tr_parent_id"/>
+        <result property="parentIds" column="tr_parent_ids"/>
+        <result property="permission" column="tr_permission"/>
+        <result property="available" column="tr_available"/>
+	</resultMap>
+
+	<sql id="selectColumns">
+		tr.id tr_id,
+		tr.name tr_name,
+		tr.type tr_type,
+		tr.url tr_url,
+		tr.parent_id tr_parent_id,
+		tr.parent_ids tr_parent_ids,
+		tr.permission tr_permission,
+		tr.available tr_available
+	</sql>
+
+	<sql id="defaultDyamicWhere">
+		<if test="id != null"> AND tr.id = #{id}</if>
+		<if test="name != null and name != ''"> AND tr.name = #{name}</if>
+		<if test="type != null and type != ''"> AND tr.type = #{type}</if>
+		<if test="url != null and url != ''"> AND tr.url = #{url}</if>
+		<if test="parentId != null"> AND tr.parent_id = #{parentId}</if>
+		<if test="parentIds != null and parentIds != ''"> AND tr.parent_ids = #{parentIds}</if>
+		<if test="permission != null and permission != ''"> AND tr.permission = #{permission}</if>
+		<if test="available != null"> AND tr.available = #{available}</if>
+
+	</sql>
+
+</mapper>

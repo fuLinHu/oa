@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hacker.oa.dao.SuperviseReceiveDao">
+
+	<!-- 通过唯一索引单表查询 -->
+	<select id="getById" parameterType="Integer" resultMap="superviseReceiveMapper">
+		select <include refid="selectColumns"/>
+		from supervise_receive sr
+		where sr.ID = #{id}
+    </select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="SuperviseReceive">
+		insert into supervise_receive(
+			ID,
+			CREATE_DATE,
+			FEEDBACK_CYCLE,
+			FEEDBACK_LIMIT,
+			HANDLE_DATE,
+			NUMBER,
+			STATUS,
+			TITLE
+		)values(
+			#{id},
+			#{createDate},
+			#{feedbackCycle},
+			#{feedbackLimit},
+			#{handleDate},
+			#{number},
+			#{status},
+			#{title}
+		)
+	</insert>
+
+    <!-- 更新所有数据 -->
+	<update id="updateById" parameterType="SuperviseReceive">
+		update supervise_receive set
+			CREATE_DATE = #{createDate},
+			FEEDBACK_CYCLE = #{feedbackCycle},
+			FEEDBACK_LIMIT = #{feedbackLimit},
+			HANDLE_DATE = #{handleDate},
+			NUMBER = #{number},
+			STATUS = #{status},
+			TITLE = #{title}
+        where ID = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="Integer">
+		delete from supervise_receive where ID = #{id}
+	</delete>
+    <!-- 单表分页查询 -->
+	<select id="findBySuperviseReceiveWhere" parameterType="SuperviseReceiveWhere" resultMap="superviseReceiveMapper">
+		select <include refid="selectColumns"/> from supervise_receive sr
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findTotalBySuperviseReceiveWhere" parameterType="SuperviseReceiveWhere" resultType="Long">
+		select count(*) from supervise_receive sr
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+    </select>
+
+	<resultMap id="superviseReceiveMapper" type="SuperviseReceive">
+        <id property="id" column="sr_ID"/>
+        <result property="createDate" column="sr_CREATE_DATE"/>
+        <result property="feedbackCycle" column="sr_FEEDBACK_CYCLE"/>
+        <result property="feedbackLimit" column="sr_FEEDBACK_LIMIT"/>
+        <result property="handleDate" column="sr_HANDLE_DATE"/>
+        <result property="number" column="sr_NUMBER"/>
+        <result property="status" column="sr_STATUS"/>
+        <result property="title" column="sr_TITLE"/>
+	</resultMap>
+
+	<sql id="selectColumns">
+		sr.ID sr_ID,
+		sr.CREATE_DATE sr_CREATE_DATE,
+		sr.FEEDBACK_CYCLE sr_FEEDBACK_CYCLE,
+		sr.FEEDBACK_LIMIT sr_FEEDBACK_LIMIT,
+		sr.HANDLE_DATE sr_HANDLE_DATE,
+		sr.NUMBER sr_NUMBER,
+		sr.STATUS sr_STATUS,
+		sr.TITLE sr_TITLE
+	</sql>
+
+	<sql id="defaultDyamicWhere">
+		<if test="id != null"> AND sr.ID = #{id}</if>
+		<if test="createDate != null"> AND sr.CREATE_DATE &gt;= #{createDate}</if>
+		<if test="startCreateDate != null"> AND sr.CREATE_DATE &gt;= #{startCreateDate}</if>
+		<if test="endCreateDate != null"> AND sr.CREATE_DATE &lt;= #{endCreateDate}</if>
+		<if test="feedbackCycle != null and feedbackCycle != ''"> AND sr.FEEDBACK_CYCLE = #{feedbackCycle}</if>
+		<if test="feedbackLimit != null and feedbackLimit != ''"> AND sr.FEEDBACK_LIMIT = #{feedbackLimit}</if>
+		<if test="handleDate != null"> AND sr.HANDLE_DATE &gt;= #{handleDate}</if>
+		<if test="startHandleDate != null"> AND sr.HANDLE_DATE &gt;= #{startHandleDate}</if>
+		<if test="endHandleDate != null"> AND sr.HANDLE_DATE &lt;= #{endHandleDate}</if>
+		<if test="number != null and number != ''"> AND sr.NUMBER = #{number}</if>
+		<if test="status != null and status != ''"> AND sr.STATUS = #{status}</if>
+		<if test="title != null and title != ''"> AND sr.TITLE = #{title}</if>
+
+	</sql>
+
+</mapper>

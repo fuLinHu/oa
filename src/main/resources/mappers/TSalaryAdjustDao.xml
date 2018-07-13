@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hacker.oa.dao.TSalaryAdjustDao">
+
+	<!-- 通过唯一索引单表查询 -->
+	<select id="getById" parameterType="Integer" resultMap="tSalaryAdjustMapper">
+		select <include refid="selectColumns"/>
+		from t_salary_adjust tsa
+		where tsa.ID = #{id}
+    </select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="TSalaryAdjust">
+		insert into t_salary_adjust(
+			ID,
+			ADJUST_MONEY,
+			APPLY_DATE,
+			DSCP,
+			PROC_INST_ID,
+			USER_ID,
+			STATUS
+		)values(
+			#{id},
+			#{adjustMoney},
+			#{applyDate},
+			#{dscp},
+			#{procInstId},
+			#{userId},
+			#{status}
+		)
+	</insert>
+
+    <!-- 更新所有数据 -->
+	<update id="updateById" parameterType="TSalaryAdjust">
+		update t_salary_adjust set
+			ADJUST_MONEY = #{adjustMoney},
+			APPLY_DATE = #{applyDate},
+			DSCP = #{dscp},
+			PROC_INST_ID = #{procInstId},
+			USER_ID = #{userId},
+			STATUS = #{status}
+        where ID = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="Integer">
+		delete from t_salary_adjust where ID = #{id}
+	</delete>
+    <!-- 单表分页查询 -->
+	<select id="findByTSalaryAdjustWhere" parameterType="TSalaryAdjustWhere" resultMap="tSalaryAdjustMapper">
+		select <include refid="selectColumns"/> from t_salary_adjust tsa
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+		<if test="start != null and length != null" >
+		limit #{start}, #{length}
+		</if>
+    </select>
+
+    <select id="findTotalByTSalaryAdjustWhere" parameterType="TSalaryAdjustWhere" resultType="Long">
+		select count(*) from t_salary_adjust tsa
+		<where>
+			<include refid="defaultDyamicWhere"></include>
+		</where>
+    </select>
+
+	<resultMap id="tSalaryAdjustMapper" type="TSalaryAdjust">
+        <id property="id" column="tsa_ID"/>
+        <result property="adjustMoney" column="tsa_ADJUST_MONEY"/>
+        <result property="applyDate" column="tsa_APPLY_DATE"/>
+        <result property="dscp" column="tsa_DSCP"/>
+        <result property="procInstId" column="tsa_PROC_INST_ID"/>
+        <result property="userId" column="tsa_USER_ID"/>
+        <result property="status" column="tsa_STATUS"/>
+	</resultMap>
+
+	<sql id="selectColumns">
+		tsa.ID tsa_ID,
+		tsa.ADJUST_MONEY tsa_ADJUST_MONEY,
+		tsa.APPLY_DATE tsa_APPLY_DATE,
+		tsa.DSCP tsa_DSCP,
+		tsa.PROC_INST_ID tsa_PROC_INST_ID,
+		tsa.USER_ID tsa_USER_ID,
+		tsa.STATUS tsa_STATUS
+	</sql>
+
+	<sql id="defaultDyamicWhere">
+		<if test="id != null"> AND tsa.ID = #{id}</if>
+		<if test="adjustMoney != null"> AND tsa.ADJUST_MONEY = #{adjustMoney}</if>
+		<if test="applyDate != null"> AND tsa.APPLY_DATE &gt;= #{applyDate}</if>
+		<if test="startApplyDate != null"> AND tsa.APPLY_DATE &gt;= #{startApplyDate}</if>
+		<if test="endApplyDate != null"> AND tsa.APPLY_DATE &lt;= #{endApplyDate}</if>
+		<if test="dscp != null and dscp != ''"> AND tsa.DSCP = #{dscp}</if>
+		<if test="procInstId != null and procInstId != ''"> AND tsa.PROC_INST_ID = #{procInstId}</if>
+		<if test="userId != null and userId != ''"> AND tsa.USER_ID = #{userId}</if>
+		<if test="status != null and status != ''"> AND tsa.STATUS = #{status}</if>
+
+	</sql>
+
+</mapper>
