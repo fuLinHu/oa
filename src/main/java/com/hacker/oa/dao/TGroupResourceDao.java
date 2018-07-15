@@ -1,7 +1,6 @@
 package com.hacker.oa.dao;
 
 import com.hacker.oa.entity.TGroupResource;
-import com.hacker.oa.entity.where.TGroupResourceWhere;
 import java.util.List;
 
 public interface TGroupResourceDao  {
@@ -14,9 +13,9 @@ public interface TGroupResourceDao  {
 
 	TGroupResource getById(Integer id);
     
-	List<TGroupResource> findByTGroupResourceWhere(TGroupResourceWhere tGroupResourceWhere);
+	List<TGroupResource> findByTGroupResourceWhere(TGroupResource tGroupResourceWhere);
 	
-	Long findTotalByTGroupResourceWhere(TGroupResourceWhere tGroupResourceWhere);
+	Long findTotalByTGroupResourceWhere(TGroupResource tGroupResourceWhere);
 	
 	
 }

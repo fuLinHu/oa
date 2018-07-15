@@ -1,8 +1,7 @@
 package com.hacker.oa.service;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.entity.TSalary;
-import com.hacker.oa.entity.where.TSalaryWhere;
-import ldh.common.PageResult;
 
 public interface TSalaryService  {
 	
@@ -14,6 +13,6 @@ public interface TSalaryService  {
 
 	TSalary getById(Integer id);
     
-	PageResult<TSalary> findByTSalaryWhere(TSalaryWhere tSalaryWhere);
+	PageResult<TSalary> findByTSalaryWhere(TSalary tSalaryWhere);
 	
 }

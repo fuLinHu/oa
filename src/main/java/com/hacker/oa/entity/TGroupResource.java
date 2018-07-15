@@ -1,8 +1,9 @@
 package com.hacker.oa.entity;
 
 
+import com.hacker.oa.bean.BaseBean;
 
-public class TGroupResource   {
+public class TGroupResource  extends BaseBean {
 
 	private Integer id;
 	private Integer groupId;

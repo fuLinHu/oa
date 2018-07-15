@@ -35,7 +35,7 @@
 		delete from t_group_resource where Id = #{id}
 	</delete>
     <!-- 单表分页查询 -->
-	<select id="findByTGroupResourceWhere" parameterType="TGroupResourceWhere" resultMap="tGroupResourceMapper">
+	<select id="findByTGroupResourceWhere" parameterType="TGroupResource" resultMap="tGroupResourceMapper">
 		select <include refid="selectColumns"/> from t_group_resource tgr
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -45,7 +45,7 @@
 		</if>
     </select>
 
-    <select id="findTotalByTGroupResourceWhere" parameterType="TGroupResourceWhere" resultType="Long">
+    <select id="findTotalByTGroupResourceWhere" parameterType="TGroupResource" resultType="Long">
 		select count(*) from t_group_resource tgr
 		<where>
 			<include refid="defaultDyamicWhere"></include>

@@ -1,9 +1,11 @@
 package com.hacker.oa.entity;
 
+import com.hacker.oa.bean.BaseBean;
+
 import java.util.List;
 
 
-public class TGroup   {
+public class TGroup   extends BaseBean {
 
 	private Integer groupId;
 	private String name;

@@ -14,9 +14,9 @@ public interface SuperviseReceiveDao  {
 
 	SuperviseReceive getById(Integer id);
     
-	/*List<SuperviseReceive> findBySuperviseReceiveWhere(SuperviseReceiveWhere superviseReceiveWhere);
+	List<SuperviseReceive> findBySuperviseReceiveWhere(SuperviseReceive superviseReceiveWhere);
 	
-	Long findTotalBySuperviseReceiveWhere(SuperviseReceiveWhere superviseReceiveWhere);*/
+	Long findTotalBySuperviseReceiveWhere(SuperviseReceive superviseReceiveWhere);
 	
 	
 }

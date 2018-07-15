@@ -1,8 +1,8 @@
 package com.hacker.oa.service;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.entity.SuperviseReceive;
-import com.hacker.oa.entity.where.SuperviseReceiveWhere;
-import ldh.common.PageResult;
+
 
 public interface SuperviseReceiveService  {
 	
@@ -14,6 +14,6 @@ public interface SuperviseReceiveService  {
 
 	SuperviseReceive getById(Integer id);
     
-	PageResult<SuperviseReceive> findBySuperviseReceiveWhere(SuperviseReceiveWhere superviseReceiveWhere);
+	PageResult<SuperviseReceive> findBySuperviseReceiveWhere(SuperviseReceive superviseReceiveWhere);
 	
 }

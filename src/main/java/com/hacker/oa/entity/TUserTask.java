@@ -1,8 +1,9 @@
 package com.hacker.oa.entity;
 
 
+import com.hacker.oa.bean.BaseBean;
 
-public class TUserTask   {
+public class TUserTask   extends BaseBean {
 
 	private Integer id;
 	private String procDefKey;

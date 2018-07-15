@@ -1,7 +1,6 @@
 package com.hacker.oa.dao;
 
 import com.hacker.oa.entity.TGroup;
-import com.hacker.oa.entity.where.TGroupWhere;
 import java.util.List;
 
 public interface TGroupDao  {
@@ -16,9 +15,9 @@ public interface TGroupDao  {
     
 	TGroup getJoinTUserByGroupId(Integer groupId);
 
-	List<TGroup> findByTGroupWhere(TGroupWhere tGroupWhere);
+	List<TGroup> findByTGroupWhere(TGroup tGroupWhere);
 	
-	Long findTotalByTGroupWhere(TGroupWhere tGroupWhere);
+	Long findTotalByTGroupWhere(TGroup tGroupWhere);
 	
 	
 }

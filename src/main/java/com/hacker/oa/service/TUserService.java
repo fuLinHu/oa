@@ -1,8 +1,7 @@
 package com.hacker.oa.service;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.entity.TUser;
-import com.hacker.oa.entity.where.TUserWhere;
-import ldh.common.PageResult;
 
 public interface TUserService  {
 	
@@ -14,7 +13,7 @@ public interface TUserService  {
 
 	TUser getByUserId(Integer userId);
     
-	PageResult<TUser> findByTUserWhere(TUserWhere tUserWhere);
+	PageResult<TUser> findByTUserWhere(TUser tUserWhere);
 	
-	PageResult<TUser> findJoinByTUserWhere(TUserWhere tUserWhere);
+	PageResult<TUser> findJoinByTUserWhere(TUser tUserWhere);
 }

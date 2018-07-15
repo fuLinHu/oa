@@ -1,11 +1,10 @@
 package com.hacker.oa.controller.modular.oa.user;
 
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.TGroupResource;
-import com.hacker.oa.entity.where.TGroupResourceWhere;
 import com.hacker.oa.service.TGroupResourceService;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
-import ldh.common.json.JsonViewFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -29,7 +28,7 @@ public class TGroupResourceController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String save(@ModelAttribute TGroupResourceWhere tGroupResourceWhere) throws Exception {
+    public String save(@ModelAttribute TGroupResource tGroupResourceWhere) throws Exception {
     	Assert.notNull(tGroupResourceWhere);
 		TGroupResource tGroupResource = (TGroupResource) tGroupResourceWhere;
     	if (tGroupResourceWhere.getId() == null) {
@@ -42,7 +41,7 @@ public class TGroupResourceController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TGroupResourceWhere tGroupResourceWhere) throws Exception {
+    public String saveJson(@ModelAttribute TGroupResource tGroupResourceWhere) throws Exception {
     	Assert.notNull(tGroupResourceWhere);
     	TGroupResource tGroupResource = (TGroupResource) tGroupResourceWhere;
     	if (tGroupResourceWhere.getId() == null) {
@@ -76,13 +75,13 @@ public class TGroupResourceController  {
     	Assert.notNull(id);
     	TGroupResource tGroupResource = tGroupResourceService.getById(id);
     	return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tGroupResource)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tGroupResource)*/
 				.toJson();
     }
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public String list(@ModelAttribute TGroupResourceWhere tGroupResourceWhere, Model model) {
+	public String list(@ModelAttribute TGroupResource tGroupResourceWhere, Model model) {
 		tGroupResourceWhere.setOrder("Id desc");
 		PageResult<TGroupResource> tGroupResources = tGroupResourceService.findByTGroupResourceWhere(tGroupResourceWhere);
 		model.addAttribute("tGroupResources", tGroupResources);
@@ -91,12 +90,12 @@ public class TGroupResourceController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TGroupResourceWhere tGroupResourceWhere, Model model) {
+	public String listJson(@ModelAttribute TGroupResource tGroupResourceWhere, Model model) {
 		tGroupResourceWhere.setOrder("Id desc");
 		PageResult<TGroupResource> tGroupResources = tGroupResourceService.findByTGroupResourceWhere(tGroupResourceWhere);
 		return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tGroupResources)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tGroupResources)*/
 				.toJson();
 	}
 	

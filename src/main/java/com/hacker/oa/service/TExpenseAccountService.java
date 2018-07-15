@@ -1,8 +1,7 @@
 package com.hacker.oa.service;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.entity.TExpenseAccount;
-/*import com.hacker.oa.entity.where.TExpenseAccountWhere;
-import ldh.common.PageResult;*/
 
 public interface TExpenseAccountService  {
 	
@@ -14,6 +13,6 @@ public interface TExpenseAccountService  {
 
 	TExpenseAccount getById(Integer id);
     
-	//PageResult<TExpenseAccount> findByTExpenseAccountWhere(TExpenseAccountWhere tExpenseAccountWhere);
+	PageResult<TExpenseAccount> findByTExpenseAccountWhere(TExpenseAccount tExpenseAccountWhere);
 	
 }

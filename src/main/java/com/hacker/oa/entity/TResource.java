@@ -1,8 +1,9 @@
 package com.hacker.oa.entity;
 
 
+import com.hacker.oa.bean.BaseBean;
 
-public class TResource   {
+public class TResource   extends BaseBean {
 
 	private Integer id;
 	private String name;

@@ -1,7 +1,6 @@
 package com.hacker.oa.dao;
 
 import com.hacker.oa.entity.TUserTask;
-import com.hacker.oa.entity.where.TUserTaskWhere;
 import java.util.List;
 
 public interface TUserTaskDao  {
@@ -14,9 +13,9 @@ public interface TUserTaskDao  {
 
 	TUserTask getById(Integer id);
     
-	List<TUserTask> findByTUserTaskWhere(TUserTaskWhere tUserTaskWhere);
+	List<TUserTask> findByTUserTaskWhere(TUserTask tUserTaskWhere);
 	
-	Long findTotalByTUserTaskWhere(TUserTaskWhere tUserTaskWhere);
+	Long findTotalByTUserTaskWhere(TUserTask tUserTaskWhere);
 	
 	
 }

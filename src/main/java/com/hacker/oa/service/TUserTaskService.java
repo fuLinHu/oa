@@ -1,8 +1,8 @@
 package com.hacker.oa.service;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.entity.TUserTask;
-import com.hacker.oa.entity.where.TUserTaskWhere;
-import ldh.common.PageResult;
+
 
 public interface TUserTaskService  {
 	
@@ -14,6 +14,6 @@ public interface TUserTaskService  {
 
 	TUserTask getById(Integer id);
     
-	PageResult<TUserTask> findByTUserTaskWhere(TUserTaskWhere tUserTaskWhere);
+	PageResult<TUserTask> findByTUserTaskWhere(TUserTask tUserTaskWhere);
 	
 }

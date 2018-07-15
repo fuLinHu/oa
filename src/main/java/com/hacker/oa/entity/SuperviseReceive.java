@@ -1,9 +1,11 @@
 package com.hacker.oa.entity;
 
+import com.hacker.oa.bean.BaseBean;
+
 import java.util.Date;
 
 
-public class SuperviseReceive   {
+public class SuperviseReceive extends BaseBean {
 
 	private Integer id;
 	private Date createDate;

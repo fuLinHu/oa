@@ -1,14 +1,13 @@
 package com.hacker.oa.controller.modular.oa.user;
 
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.DateEditor;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.TVacation;
-import com.hacker.oa.entity.where.TVacationWhere;
 import com.hacker.oa.service.TVacationService;
 import java.util.Date;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import ldh.common.PageResult;
-import ldh.common.json.JsonViewFactory;
-import ldh.common.mvc.DateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -34,7 +33,7 @@ public class TVacationController  {
 	protected void initBinder(HttpServletRequest request,  
 	                              ServletRequestDataBinder binder) throws Exception {  
 	    //对于需要转换为Date类型的属性，使用DateEditor进行处理  
-	    binder.registerCustomEditor(Date.class, new DateEditor());  
+	    binder.registerCustomEditor(Date.class, new DateEditor());
 	} 
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/all")
@@ -43,7 +42,7 @@ public class TVacationController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String save(@ModelAttribute TVacationWhere tVacationWhere) throws Exception {
+    public String save(@ModelAttribute TVacation tVacationWhere) throws Exception {
     	Assert.notNull(tVacationWhere);
 		TVacation tVacation = (TVacation) tVacationWhere;
     	if (tVacationWhere.getId() == null) {
@@ -56,7 +55,7 @@ public class TVacationController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TVacationWhere tVacationWhere) throws Exception {
+    public String saveJson(@ModelAttribute TVacation tVacationWhere) throws Exception {
     	Assert.notNull(tVacationWhere);
     	TVacation tVacation = (TVacation) tVacationWhere;
     	if (tVacationWhere.getId() == null) {
@@ -90,13 +89,13 @@ public class TVacationController  {
     	Assert.notNull(id);
     	TVacation tVacation = tVacationService.getById(id);
     	return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tVacation)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tVacation)*/
 				.toJson();
     }
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public String list(@ModelAttribute TVacationWhere tVacationWhere, Model model) {
+	public String list(@ModelAttribute TVacation tVacationWhere, Model model) {
 		tVacationWhere.setOrder("ID desc");
 		PageResult<TVacation> tVacations = tVacationService.findByTVacationWhere(tVacationWhere);
 		model.addAttribute("tVacations", tVacations);
@@ -105,12 +104,12 @@ public class TVacationController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TVacationWhere tVacationWhere, Model model) {
+	public String listJson(@ModelAttribute TVacation tVacationWhere, Model model) {
 		tVacationWhere.setOrder("ID desc");
 		PageResult<TVacation> tVacations = tVacationService.findByTVacationWhere(tVacationWhere);
 		return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tVacations)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tVacations)*/
 				.toJson();
 	}
 	

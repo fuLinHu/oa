@@ -50,7 +50,7 @@
 		delete from supervise_receive where ID = #{id}
 	</delete>
     <!-- 单表分页查询 -->
-	<select id="findBySuperviseReceiveWhere" parameterType="SuperviseReceiveWhere" resultMap="superviseReceiveMapper">
+	<select id="findBySuperviseReceiveWhere" parameterType="SuperviseReceive" resultMap="superviseReceiveMapper">
 		select <include refid="selectColumns"/> from supervise_receive sr
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -60,7 +60,7 @@
 		</if>
     </select>
 
-    <select id="findTotalBySuperviseReceiveWhere" parameterType="SuperviseReceiveWhere" resultType="Long">
+    <select id="findTotalBySuperviseReceiveWhere" parameterType="SuperviseReceive" resultType="Long">
 		select count(*) from supervise_receive sr
 		<where>
 			<include refid="defaultDyamicWhere"></include>

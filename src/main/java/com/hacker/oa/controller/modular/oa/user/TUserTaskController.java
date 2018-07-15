@@ -1,11 +1,11 @@
 package com.hacker.oa.controller.modular.oa.user;
 
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.TUserTask;
-import com.hacker.oa.entity.where.TUserTaskWhere;
 import com.hacker.oa.service.TUserTaskService;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
-import ldh.common.json.JsonViewFactory;
+import com.hacker.oa.common.DateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -29,7 +29,7 @@ public class TUserTaskController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String save(@ModelAttribute TUserTaskWhere tUserTaskWhere) throws Exception {
+    public String save(@ModelAttribute TUserTask tUserTaskWhere) throws Exception {
     	Assert.notNull(tUserTaskWhere);
 		TUserTask tUserTask = (TUserTask) tUserTaskWhere;
     	if (tUserTaskWhere.getId() == null) {
@@ -42,7 +42,7 @@ public class TUserTaskController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TUserTaskWhere tUserTaskWhere) throws Exception {
+    public String saveJson(@ModelAttribute TUserTask tUserTaskWhere) throws Exception {
     	Assert.notNull(tUserTaskWhere);
     	TUserTask tUserTask = (TUserTask) tUserTaskWhere;
     	if (tUserTaskWhere.getId() == null) {
@@ -76,13 +76,13 @@ public class TUserTaskController  {
     	Assert.notNull(id);
     	TUserTask tUserTask = tUserTaskService.getById(id);
     	return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tUserTask)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tUserTask)*/
 				.toJson();
     }
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public String list(@ModelAttribute TUserTaskWhere tUserTaskWhere, Model model) {
+	public String list(@ModelAttribute TUserTask tUserTaskWhere, Model model) {
 		tUserTaskWhere.setOrder("ID desc");
 		PageResult<TUserTask> tUserTasks = tUserTaskService.findByTUserTaskWhere(tUserTaskWhere);
 		model.addAttribute("tUserTasks", tUserTasks);
@@ -91,12 +91,12 @@ public class TUserTaskController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TUserTaskWhere tUserTaskWhere, Model model) {
+	public String listJson(@ModelAttribute TUserTask tUserTaskWhere, Model model) {
 		tUserTaskWhere.setOrder("ID desc");
 		PageResult<TUserTask> tUserTasks = tUserTaskService.findByTUserTaskWhere(tUserTaskWhere);
 		return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tUserTasks)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tUserTasks)*/
 				.toJson();
 	}
 	

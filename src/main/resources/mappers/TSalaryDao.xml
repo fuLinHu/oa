@@ -35,7 +35,7 @@
 		delete from t_salary where ID = #{id}
 	</delete>
     <!-- 单表分页查询 -->
-	<select id="findByTSalaryWhere" parameterType="TSalaryWhere" resultMap="tSalaryMapper">
+	<select id="findByTSalaryWhere" parameterType="TSalary" resultMap="tSalaryMapper">
 		select <include refid="selectColumns"/> from t_salary ts
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -45,7 +45,7 @@
 		</if>
     </select>
 
-    <select id="findTotalByTSalaryWhere" parameterType="TSalaryWhere" resultType="Long">
+    <select id="findTotalByTSalaryWhere" parameterType="TSalary" resultType="Long">
 		select count(*) from t_salary ts
 		<where>
 			<include refid="defaultDyamicWhere"></include>

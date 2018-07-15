@@ -1,7 +1,6 @@
 package com.hacker.oa.dao;
 
 import com.hacker.oa.entity.TExpenseAccount;
-import com.hacker.oa.entity.where.TExpenseAccountWhere;
 import java.util.List;
 
 public interface TExpenseAccountDao  {
@@ -14,9 +13,9 @@ public interface TExpenseAccountDao  {
 
 	TExpenseAccount getById(Integer id);
     
-	List<TExpenseAccount> findByTExpenseAccountWhere(TExpenseAccountWhere tExpenseAccountWhere);
+	List<TExpenseAccount> findByTExpenseAccountWhere(TExpenseAccount tExpenseAccountWhere);
 	
-	Long findTotalByTExpenseAccountWhere(TExpenseAccountWhere tExpenseAccountWhere);
+	Long findTotalByTExpenseAccountWhere(TExpenseAccount tExpenseAccountWhere);
 	
 	
 }

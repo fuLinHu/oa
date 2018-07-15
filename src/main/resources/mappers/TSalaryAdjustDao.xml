@@ -47,7 +47,7 @@
 		delete from t_salary_adjust where ID = #{id}
 	</delete>
     <!-- 单表分页查询 -->
-	<select id="findByTSalaryAdjustWhere" parameterType="TSalaryAdjustWhere" resultMap="tSalaryAdjustMapper">
+	<select id="findByTSalaryAdjustWhere" parameterType="TSalaryAdjust" resultMap="tSalaryAdjustMapper">
 		select <include refid="selectColumns"/> from t_salary_adjust tsa
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -57,7 +57,7 @@
 		</if>
     </select>
 
-    <select id="findTotalByTSalaryAdjustWhere" parameterType="TSalaryAdjustWhere" resultType="Long">
+    <select id="findTotalByTSalaryAdjustWhere" parameterType="TSalaryAdjust" resultType="Long">
 		select count(*) from t_salary_adjust tsa
 		<where>
 			<include refid="defaultDyamicWhere"></include>

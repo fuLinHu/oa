@@ -1,9 +1,11 @@
 package com.hacker.oa.entity;
 
+import com.hacker.oa.bean.BaseBean;
+
 import java.math.BigDecimal;
 
 
-public class TSalary   {
+public class TSalary   extends BaseBean {
 
 	private Integer id;
 	private BigDecimal baseMoney;

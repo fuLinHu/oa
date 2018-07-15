@@ -50,7 +50,7 @@
 		delete from t_resource where id = #{id}
 	</delete>
     <!-- 单表分页查询 -->
-	<select id="findByTResourceWhere" parameterType="TResourceWhere" resultMap="tResourceMapper">
+	<select id="findByTResourceWhere" parameterType="TResource" resultMap="tResourceMapper">
 		select <include refid="selectColumns"/> from t_resource tr
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -60,7 +60,7 @@
 		</if>
     </select>
 
-    <select id="findTotalByTResourceWhere" parameterType="TResourceWhere" resultType="Long">
+    <select id="findTotalByTResourceWhere" parameterType="TResource" resultType="Long">
 		select count(*) from t_resource tr
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -98,7 +98,6 @@
 		<if test="parentIds != null and parentIds != ''"> AND tr.parent_ids = #{parentIds}</if>
 		<if test="permission != null and permission != ''"> AND tr.permission = #{permission}</if>
 		<if test="available != null"> AND tr.available = #{available}</if>
-
 	</sql>
 
 </mapper>

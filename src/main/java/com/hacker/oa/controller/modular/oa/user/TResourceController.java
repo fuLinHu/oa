@@ -1,11 +1,10 @@
 package com.hacker.oa.controller.modular.oa.user;
 
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.TResource;
-import com.hacker.oa.entity.where.TResourceWhere;
 import com.hacker.oa.service.TResourceService;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
-import ldh.common.json.JsonViewFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -29,7 +28,7 @@ public class TResourceController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String save(@ModelAttribute TResourceWhere tResourceWhere) throws Exception {
+    public String save(@ModelAttribute TResource tResourceWhere) throws Exception {
     	Assert.notNull(tResourceWhere);
 		TResource tResource = (TResource) tResourceWhere;
     	if (tResourceWhere.getId() == null) {
@@ -42,7 +41,7 @@ public class TResourceController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TResourceWhere tResourceWhere) throws Exception {
+    public String saveJson(@ModelAttribute TResource tResourceWhere) throws Exception {
     	Assert.notNull(tResourceWhere);
     	TResource tResource = (TResource) tResourceWhere;
     	if (tResourceWhere.getId() == null) {
@@ -76,13 +75,13 @@ public class TResourceController  {
     	Assert.notNull(id);
     	TResource tResource = tResourceService.getById(id);
     	return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tResource)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tResource)*/
 				.toJson();
     }
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public String list(@ModelAttribute TResourceWhere tResourceWhere, Model model) {
+	public String list(@ModelAttribute TResource tResourceWhere, Model model) {
 		tResourceWhere.setOrder("id desc");
 		PageResult<TResource> tResources = tResourceService.findByTResourceWhere(tResourceWhere);
 		model.addAttribute("tResources", tResources);
@@ -91,12 +90,12 @@ public class TResourceController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TResourceWhere tResourceWhere, Model model) {
+	public String listJson(@ModelAttribute TResource tResourceWhere, Model model) {
 		tResourceWhere.setOrder("id desc");
 		PageResult<TResource> tResources = tResourceService.findByTResourceWhere(tResourceWhere);
 		return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tResources)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tResources)*/
 				.toJson();
 	}
 	

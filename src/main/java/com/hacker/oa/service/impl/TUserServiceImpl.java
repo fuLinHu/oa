@@ -1,13 +1,12 @@
 package com.hacker.oa.service.impl;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.dao.TUserDao;
 import com.hacker.oa.entity.TUser;
-import com.hacker.oa.entity.where.TUserWhere;
 import com.hacker.oa.service.TUserService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +44,7 @@ public class TUserServiceImpl implements TUserService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public PageResult<TUser> findByTUserWhere(TUserWhere tUserWhere) {
+	public PageResult<TUser> findByTUserWhere(TUser tUserWhere) {
 		long total = tUserDao.findTotalByTUserWhere(tUserWhere);
 		List<TUser> imageList = new ArrayList<TUser>();
 		if (total > 0) {
@@ -57,7 +56,7 @@ public class TUserServiceImpl implements TUserService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public PageResult<TUser> findJoinByTUserWhere(TUserWhere tUserWhere) {
+	public PageResult<TUser> findJoinByTUserWhere(TUser tUserWhere) {
 		long total = tUserDao.findJoinTotalByTUserWhere(tUserWhere);
 		List<TUser> imageList = new ArrayList<TUser>();
 		if (total > 0) {

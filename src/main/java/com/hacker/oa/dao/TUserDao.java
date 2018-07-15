@@ -1,7 +1,6 @@
 package com.hacker.oa.dao;
 
 import com.hacker.oa.entity.TUser;
-import com.hacker.oa.entity.where.TUserWhere;
 import java.util.List;
 
 public interface TUserDao  {
@@ -14,12 +13,12 @@ public interface TUserDao  {
 
 	TUser getByUserId(Integer userId);
     
-	List<TUser> findByTUserWhere(TUserWhere tUserWhere);
+	List<TUser> findByTUserWhere(TUser tUserWhere);
 	
-	Long findTotalByTUserWhere(TUserWhere tUserWhere);
+	Long findTotalByTUserWhere(TUser tUserWhere);
 	
-	List<TUser> findJoinByTUserWhere(TUserWhere tUserWhere);
+	List<TUser> findJoinByTUserWhere(TUser tUserWhere);
 	
-	Long findJoinTotalByTUserWhere(TUserWhere tUserWhere);
+	Long findJoinTotalByTUserWhere(TUser tUserWhere);
 	
 }

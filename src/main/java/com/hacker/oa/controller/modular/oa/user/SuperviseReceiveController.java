@@ -1,14 +1,13 @@
 package com.hacker.oa.controller.modular.oa.user;
 
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.DateEditor;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.SuperviseReceive;
-import com.hacker.oa.entity.where.SuperviseReceiveWhere;
 import com.hacker.oa.service.SuperviseReceiveService;
 import java.util.Date;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import ldh.common.PageResult;
-import ldh.common.json.JsonViewFactory;
-import ldh.common.mvc.DateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -34,7 +33,7 @@ public class SuperviseReceiveController  {
 	protected void initBinder(HttpServletRequest request,  
 	                              ServletRequestDataBinder binder) throws Exception {  
 	    //对于需要转换为Date类型的属性，使用DateEditor进行处理  
-	    binder.registerCustomEditor(Date.class, new DateEditor());  
+	    binder.registerCustomEditor(Date.class, new DateEditor());
 	} 
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/all")
@@ -43,7 +42,7 @@ public class SuperviseReceiveController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String save(@ModelAttribute SuperviseReceiveWhere superviseReceiveWhere) throws Exception {
+    public String save(@ModelAttribute SuperviseReceive superviseReceiveWhere) throws Exception {
     	Assert.notNull(superviseReceiveWhere);
 		SuperviseReceive superviseReceive = (SuperviseReceive) superviseReceiveWhere;
     	if (superviseReceiveWhere.getId() == null) {
@@ -56,7 +55,7 @@ public class SuperviseReceiveController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute SuperviseReceiveWhere superviseReceiveWhere) throws Exception {
+    public String saveJson(@ModelAttribute SuperviseReceive superviseReceiveWhere) throws Exception {
     	Assert.notNull(superviseReceiveWhere);
     	SuperviseReceive superviseReceive = (SuperviseReceive) superviseReceiveWhere;
     	if (superviseReceiveWhere.getId() == null) {
@@ -90,13 +89,13 @@ public class SuperviseReceiveController  {
     	Assert.notNull(id);
     	SuperviseReceive superviseReceive = superviseReceiveService.getById(id);
     	return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", superviseReceive)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", superviseReceive)*/
 				.toJson();
     }
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public String list(@ModelAttribute SuperviseReceiveWhere superviseReceiveWhere, Model model) {
+	public String list(@ModelAttribute SuperviseReceive superviseReceiveWhere, Model model) {
 		superviseReceiveWhere.setOrder("ID desc");
 		PageResult<SuperviseReceive> superviseReceives = superviseReceiveService.findBySuperviseReceiveWhere(superviseReceiveWhere);
 		model.addAttribute("superviseReceives", superviseReceives);
@@ -105,12 +104,12 @@ public class SuperviseReceiveController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute SuperviseReceiveWhere superviseReceiveWhere, Model model) {
+	public String listJson(@ModelAttribute SuperviseReceive superviseReceiveWhere, Model model) {
 		superviseReceiveWhere.setOrder("ID desc");
 		PageResult<SuperviseReceive> superviseReceives = superviseReceiveService.findBySuperviseReceiveWhere(superviseReceiveWhere);
 		return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", superviseReceives)
+				//.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				//.put("data", superviseReceives)
 				.toJson();
 	}
 	

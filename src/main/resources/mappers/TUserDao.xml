@@ -47,7 +47,7 @@
 		delete from t_user where USER_ID = #{id}
 	</delete>
     <!-- 单表分页查询 -->
-	<select id="findByTUserWhere" parameterType="TUserWhere" resultMap="tUserMapper">
+	<select id="findByTUserWhere" parameterType="TUser" resultMap="tUserMapper">
 		select <include refid="selectColumns"/> from t_user tu
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -57,7 +57,7 @@
 		</if>
     </select>
 
-    <select id="findTotalByTUserWhere" parameterType="TUserWhere" resultType="Long">
+    <select id="findTotalByTUserWhere" parameterType="TUser" resultType="Long">
 		select count(*) from t_user tu
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -65,7 +65,7 @@
     </select>
 
     <!-- 单表关联查询（多对一） -->
-	<select id="findJoinByTUserWhere" parameterType="TUserWhere" resultMap="selectJoinAssociatesMapper">
+	<select id="findJoinByTUserWhere" parameterType="TUser" resultMap="selectJoinAssociatesMapper">
 		select <include refid="selectColumns"/>  , <include refid="com.hacker.oa.dao.TGroupDao.selectColumns"/>
 		from t_user tu
 		left join t_group tg on tu.GROUP_ID = tg.GROUP_ID
@@ -78,7 +78,7 @@
 		</if>
     </select>
 
-    <select id="findJoinTotalByTUserWhere" parameterType="TUserWhere" resultType="Long">
+    <select id="findJoinTotalByTUserWhere" parameterType="TUser" resultType="Long">
 		select count(*)
 		from t_user tu
 		left join t_group tg on tu.GROUP_ID = tg.GROUP_ID

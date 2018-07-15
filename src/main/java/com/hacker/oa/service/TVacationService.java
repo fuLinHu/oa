@@ -1,8 +1,7 @@
 package com.hacker.oa.service;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.entity.TVacation;
-/*import com.hacker.oa.entity.where.TVacationWhere;
-import ldh.common.PageResult;*/
 
 public interface TVacationService  {
 	
@@ -14,6 +13,6 @@ public interface TVacationService  {
 
 	TVacation getById(Integer id);
     
-	//PageResult<TVacation> findByTVacationWhere(TVacationWhere tVacationWhere);
+	PageResult<TVacation> findByTVacationWhere(TVacation tVacationWhere);
 	
 }

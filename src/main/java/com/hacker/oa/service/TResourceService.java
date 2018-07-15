@@ -1,8 +1,8 @@
 package com.hacker.oa.service;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.entity.TResource;
-import com.hacker.oa.entity.where.TResourceWhere;
-import ldh.common.PageResult;
+
 
 public interface TResourceService  {
 	
@@ -14,6 +14,6 @@ public interface TResourceService  {
 
 	TResource getById(Integer id);
     
-	PageResult<TResource> findByTResourceWhere(TResourceWhere tResourceWhere);
+	PageResult<TResource> findByTResourceWhere(TResource tResourceWhere);
 	
 }

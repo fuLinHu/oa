@@ -1,14 +1,13 @@
 package com.hacker.oa.controller.modular.oa.user;
 
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.TUser;
-import com.hacker.oa.entity.where.TUserWhere;
 import com.hacker.oa.service.TUserService;
 import java.util.Date;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import ldh.common.PageResult;
-import ldh.common.json.JsonViewFactory;
-import ldh.common.mvc.DateEditor;
+import com.hacker.oa.common.DateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -43,7 +42,7 @@ public class TUserController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String save(@ModelAttribute TUserWhere tUserWhere) throws Exception {
+    public String save(@ModelAttribute TUser tUserWhere) throws Exception {
     	Assert.notNull(tUserWhere);
 		TUser tUser = (TUser) tUserWhere;
     	if (tUserWhere.getUserId() == null) {
@@ -56,7 +55,7 @@ public class TUserController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TUserWhere tUserWhere) throws Exception {
+    public String saveJson(@ModelAttribute TUser tUserWhere) throws Exception {
     	Assert.notNull(tUserWhere);
     	TUser tUser = (TUser) tUserWhere;
     	if (tUserWhere.getUserId() == null) {
@@ -90,13 +89,13 @@ public class TUserController  {
     	Assert.notNull(id);
     	TUser tUser = tUserService.getByUserId(id);
     	return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tUser)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tUser)*/
 				.toJson();
     }
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public String list(@ModelAttribute TUserWhere tUserWhere, Model model) {
+	public String list(@ModelAttribute TUser tUserWhere, Model model) {
 		tUserWhere.setOrder("USER_ID desc");
 		PageResult<TUser> tUsers = tUserService.findJoinByTUserWhere(tUserWhere);
 		model.addAttribute("tUsers", tUsers);
@@ -105,12 +104,12 @@ public class TUserController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TUserWhere tUserWhere, Model model) {
+	public String listJson(@ModelAttribute TUser tUserWhere, Model model) {
 		tUserWhere.setOrder("USER_ID desc");
 		PageResult<TUser> tUsers = tUserService.findJoinByTUserWhere(tUserWhere);
 		return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tUsers)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tUsers)*/
 				.toJson();
 	}
 	

@@ -1,11 +1,11 @@
 package com.hacker.oa.controller.modular.oa.user;
 
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.TSalary;
-import com.hacker.oa.entity.where.TSalaryWhere;
 import com.hacker.oa.service.TSalaryService;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
-import ldh.common.json.JsonViewFactory;
+import com.hacker.oa.common.DateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -29,7 +29,7 @@ public class TSalaryController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String save(@ModelAttribute TSalaryWhere tSalaryWhere) throws Exception {
+    public String save(@ModelAttribute TSalary tSalaryWhere) throws Exception {
     	Assert.notNull(tSalaryWhere);
 		TSalary tSalary = (TSalary) tSalaryWhere;
     	if (tSalaryWhere.getId() == null) {
@@ -42,7 +42,7 @@ public class TSalaryController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TSalaryWhere tSalaryWhere) throws Exception {
+    public String saveJson(@ModelAttribute TSalary tSalaryWhere) throws Exception {
     	Assert.notNull(tSalaryWhere);
     	TSalary tSalary = (TSalary) tSalaryWhere;
     	if (tSalaryWhere.getId() == null) {
@@ -76,13 +76,13 @@ public class TSalaryController  {
     	Assert.notNull(id);
     	TSalary tSalary = tSalaryService.getById(id);
     	return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tSalary)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tSalary)*/
 				.toJson();
     }
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public String list(@ModelAttribute TSalaryWhere tSalaryWhere, Model model) {
+	public String list(@ModelAttribute TSalary tSalaryWhere, Model model) {
 		tSalaryWhere.setOrder("ID desc");
 		PageResult<TSalary> tSalarys = tSalaryService.findByTSalaryWhere(tSalaryWhere);
 		model.addAttribute("tSalarys", tSalarys);
@@ -91,12 +91,12 @@ public class TSalaryController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TSalaryWhere tSalaryWhere, Model model) {
+	public String listJson(@ModelAttribute TSalary tSalaryWhere, Model model) {
 		tSalaryWhere.setOrder("ID desc");
 		PageResult<TSalary> tSalarys = tSalaryService.findByTSalaryWhere(tSalaryWhere);
 		return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tSalarys)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tSalarys)*/
 				.toJson();
 	}
 	

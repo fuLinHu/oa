@@ -42,7 +42,7 @@
 		delete from t_group where GROUP_ID = #{id}
 	</delete>
     <!-- 单表分页查询 -->
-	<select id="findByTGroupWhere" parameterType="TGroupWhere" resultMap="tGroupMapper">
+	<select id="findByTGroupWhere" parameterType="TGroup" resultMap="tGroupMapper">
 		select <include refid="selectColumns"/> from t_group tg
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -52,7 +52,7 @@
 		</if>
     </select>
 
-    <select id="findTotalByTGroupWhere" parameterType="TGroupWhere" resultType="Long">
+    <select id="findTotalByTGroupWhere" parameterType="TGroup" resultType="Long">
 		select count(*) from t_group tg
 		<where>
 			<include refid="defaultDyamicWhere"></include>

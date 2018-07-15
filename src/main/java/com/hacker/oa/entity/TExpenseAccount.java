@@ -1,10 +1,12 @@
 package com.hacker.oa.entity;
 
+import com.hacker.oa.bean.BaseBean;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 
-public class TExpenseAccount   {
+public class TExpenseAccount  extends BaseBean {
 
 	private Integer id;
 	private Date date;

@@ -56,7 +56,7 @@
 		delete from t_vacation where ID = #{id}
 	</delete>
     <!-- 单表分页查询 -->
-	<select id="findByTVacationWhere" parameterType="TVacationWhere" resultMap="tVacationMapper">
+	<select id="findByTVacationWhere" parameterType="TVacation" resultMap="tVacationMapper">
 		select <include refid="selectColumns"/> from t_vacation tv
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -66,7 +66,7 @@
 		</if>
     </select>
 
-    <select id="findTotalByTVacationWhere" parameterType="TVacationWhere" resultType="Long">
+    <select id="findTotalByTVacationWhere" parameterType="TVacation" resultType="Long">
 		select count(*) from t_vacation tv
 		<where>
 			<include refid="defaultDyamicWhere"></include>

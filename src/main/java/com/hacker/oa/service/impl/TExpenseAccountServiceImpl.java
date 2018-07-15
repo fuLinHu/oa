@@ -1,5 +1,6 @@
 package com.hacker.oa.service.impl;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.dao.TExpenseAccountDao;
 import com.hacker.oa.entity.TExpenseAccount;
 //import com.hacker.oa.entity.where.TExpenseAccountWhere;
@@ -42,10 +43,9 @@ public class TExpenseAccountServiceImpl implements TExpenseAccountService {
 		return tExpenseAccount;
     }
     
-	
-	/*@Override
+	@Override
 	@Transactional(readOnly = true)
-	public PageResult<TExpenseAccount> findByTExpenseAccountWhere(TExpenseAccountWhere tExpenseAccountWhere) {
+	public PageResult<TExpenseAccount> findByTExpenseAccountWhere(TExpenseAccount tExpenseAccountWhere) {
 		long total = tExpenseAccountDao.findTotalByTExpenseAccountWhere(tExpenseAccountWhere);
 		List<TExpenseAccount> imageList = new ArrayList<TExpenseAccount>();
 		if (total > 0) {
@@ -53,7 +53,7 @@ public class TExpenseAccountServiceImpl implements TExpenseAccountService {
 		}
 		
 		return new PageResult<TExpenseAccount>(tExpenseAccountWhere, total, imageList);
-	}*/
+	}
 	
 	
 }

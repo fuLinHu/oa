@@ -53,7 +53,7 @@
 		delete from t_expense_account where ID = #{id}
 	</delete>
     <!-- 单表分页查询 -->
-	<select id="findByTExpenseAccountWhere" parameterType="TExpenseAccountWhere" resultMap="tExpenseAccountMapper">
+	<select id="findByTExpenseAccountWhere" parameterType="TExpenseAccount" resultMap="tExpenseAccountMapper">
 		select <include refid="selectColumns"/> from t_expense_account tea
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -63,7 +63,7 @@
 		</if>
     </select>
 
-    <select id="findTotalByTExpenseAccountWhere" parameterType="TExpenseAccountWhere" resultType="Long">
+    <select id="findTotalByTExpenseAccountWhere" parameterType="TExpenseAccount" resultType="Long">
 		select count(*) from t_expense_account tea
 		<where>
 			<include refid="defaultDyamicWhere"></include>

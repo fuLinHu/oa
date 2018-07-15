@@ -1,8 +1,8 @@
 package com.hacker.oa.service;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.entity.TGroupResource;
-import com.hacker.oa.entity.where.TGroupResourceWhere;
-import ldh.common.PageResult;
+
 
 public interface TGroupResourceService  {
 	
@@ -14,6 +14,6 @@ public interface TGroupResourceService  {
 
 	TGroupResource getById(Integer id);
     
-	PageResult<TGroupResource> findByTGroupResourceWhere(TGroupResourceWhere tGroupResourceWhere);
+	PageResult<TGroupResource> findByTGroupResourceWhere(TGroupResource tGroupResourceWhere);
 	
 }

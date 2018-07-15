@@ -1,8 +1,7 @@
 package com.hacker.oa.service;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.entity.TGroup;
-import com.hacker.oa.entity.where.TGroupWhere;
-import ldh.common.PageResult;
 
 public interface TGroupService  {
 	
@@ -14,6 +13,6 @@ public interface TGroupService  {
 
 	TGroup getByGroupId(Integer groupId);
     
-	PageResult<TGroup> findByTGroupWhere(TGroupWhere tGroupWhere);
+	PageResult<TGroup> findByTGroupWhere(TGroup tGroupWhere);
 	
 }

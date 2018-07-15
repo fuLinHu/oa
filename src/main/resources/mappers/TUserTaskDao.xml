@@ -50,7 +50,7 @@
 		delete from t_user_task where ID = #{id}
 	</delete>
     <!-- 单表分页查询 -->
-	<select id="findByTUserTaskWhere" parameterType="TUserTaskWhere" resultMap="tUserTaskMapper">
+	<select id="findByTUserTaskWhere" parameterType="TUserTask" resultMap="tUserTaskMapper">
 		select <include refid="selectColumns"/> from t_user_task tut
 		<where>
 			<include refid="defaultDyamicWhere"></include>
@@ -60,7 +60,7 @@
 		</if>
     </select>
 
-    <select id="findTotalByTUserTaskWhere" parameterType="TUserTaskWhere" resultType="Long">
+    <select id="findTotalByTUserTaskWhere" parameterType="TUserTask" resultType="Long">
 		select count(*) from t_user_task tut
 		<where>
 			<include refid="defaultDyamicWhere"></include>

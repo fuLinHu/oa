@@ -1,13 +1,12 @@
 package com.hacker.oa.service.impl;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.dao.TGroupDao;
 import com.hacker.oa.entity.TGroup;
-import com.hacker.oa.entity.where.TGroupWhere;
 import com.hacker.oa.service.TGroupService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +44,7 @@ public class TGroupServiceImpl implements TGroupService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public PageResult<TGroup> findByTGroupWhere(TGroupWhere tGroupWhere) {
+	public PageResult<TGroup> findByTGroupWhere(TGroup tGroupWhere) {
 		long total = tGroupDao.findTotalByTGroupWhere(tGroupWhere);
 		List<TGroup> imageList = new ArrayList<TGroup>();
 		if (total > 0) {

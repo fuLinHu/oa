@@ -1,11 +1,11 @@
 package com.hacker.oa.controller.modular.oa.user;
 
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.TGroup;
-import com.hacker.oa.entity.where.TGroupWhere;
 import com.hacker.oa.service.TGroupService;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
-import ldh.common.json.JsonViewFactory;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -29,7 +29,7 @@ public class TGroupController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String save(@ModelAttribute TGroupWhere tGroupWhere) throws Exception {
+    public String save(@ModelAttribute TGroup tGroupWhere) throws Exception {
     	Assert.notNull(tGroupWhere);
 		TGroup tGroup = (TGroup) tGroupWhere;
     	if (tGroupWhere.getGroupId() == null) {
@@ -42,7 +42,7 @@ public class TGroupController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TGroupWhere tGroupWhere) throws Exception {
+    public String saveJson(@ModelAttribute TGroup tGroupWhere) throws Exception {
     	Assert.notNull(tGroupWhere);
     	TGroup tGroup = (TGroup) tGroupWhere;
     	if (tGroupWhere.getGroupId() == null) {
@@ -76,13 +76,13 @@ public class TGroupController  {
     	Assert.notNull(id);
     	TGroup tGroup = tGroupService.getByGroupId(id);
     	return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tGroup)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tGroup)*/
 				.toJson();
     }
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public String list(@ModelAttribute TGroupWhere tGroupWhere, Model model) {
+	public String list(@ModelAttribute TGroup tGroupWhere, Model model) {
 		tGroupWhere.setOrder("GROUP_ID desc");
 		PageResult<TGroup> tGroups = tGroupService.findByTGroupWhere(tGroupWhere);
 		model.addAttribute("tGroups", tGroups);
@@ -91,12 +91,12 @@ public class TGroupController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TGroupWhere tGroupWhere, Model model) {
+	public String listJson(@ModelAttribute TGroup tGroupWhere, Model model) {
 		tGroupWhere.setOrder("GROUP_ID desc");
 		PageResult<TGroup> tGroups = tGroupService.findByTGroupWhere(tGroupWhere);
 		return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tGroups)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tGroups)*/
 				.toJson();
 	}
 	

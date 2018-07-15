@@ -1,7 +1,6 @@
 package com.hacker.oa.dao;
 
 import com.hacker.oa.entity.TSalary;
-import com.hacker.oa.entity.where.TSalaryWhere;
 import java.util.List;
 
 public interface TSalaryDao  {
@@ -14,9 +13,9 @@ public interface TSalaryDao  {
 
 	TSalary getById(Integer id);
     
-	List<TSalary> findByTSalaryWhere(TSalaryWhere tSalaryWhere);
+	List<TSalary> findByTSalaryWhere(TSalary tSalaryWhere);
 	
-	Long findTotalByTSalaryWhere(TSalaryWhere tSalaryWhere);
+	Long findTotalByTSalaryWhere(TSalary tSalaryWhere);
 	
 	
 }

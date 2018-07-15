@@ -1,14 +1,13 @@
 package com.hacker.oa.controller.modular.oa.user;
 
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.DateEditor;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.TExpenseAccount;
-import com.hacker.oa.entity.where.TExpenseAccountWhere;
 import com.hacker.oa.service.TExpenseAccountService;
 import java.util.Date;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import ldh.common.PageResult;
-import ldh.common.json.JsonViewFactory;
-import ldh.common.mvc.DateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -34,8 +33,8 @@ public class TExpenseAccountController  {
 	protected void initBinder(HttpServletRequest request,  
 	                              ServletRequestDataBinder binder) throws Exception {  
 	    //对于需要转换为Date类型的属性，使用DateEditor进行处理  
-	    binder.registerCustomEditor(Date.class, new DateEditor());  
-	} 
+	    binder.registerCustomEditor(Date.class, new DateEditor());
+	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/all")
     public String all() throws Exception {
@@ -43,7 +42,7 @@ public class TExpenseAccountController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String save(@ModelAttribute TExpenseAccountWhere tExpenseAccountWhere) throws Exception {
+    public String save(@ModelAttribute TExpenseAccount tExpenseAccountWhere) throws Exception {
     	Assert.notNull(tExpenseAccountWhere);
 		TExpenseAccount tExpenseAccount = (TExpenseAccount) tExpenseAccountWhere;
     	if (tExpenseAccountWhere.getId() == null) {
@@ -56,7 +55,7 @@ public class TExpenseAccountController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TExpenseAccountWhere tExpenseAccountWhere) throws Exception {
+    public String saveJson(@ModelAttribute TExpenseAccount tExpenseAccountWhere) throws Exception {
     	Assert.notNull(tExpenseAccountWhere);
     	TExpenseAccount tExpenseAccount = (TExpenseAccount) tExpenseAccountWhere;
     	if (tExpenseAccountWhere.getId() == null) {
@@ -84,36 +83,36 @@ public class TExpenseAccountController  {
         return "texpenseaccount/view";
     }
     
-    @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
+   @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
     @ResponseBody
     public String viewJson(@PathVariable Integer id, Model model) throws Exception {
     	Assert.notNull(id);
     	TExpenseAccount tExpenseAccount = tExpenseAccountService.getById(id);
     	return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tExpenseAccount)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tExpenseAccount)*/
 				.toJson();
     }
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public String list(@ModelAttribute TExpenseAccountWhere tExpenseAccountWhere, Model model) {
+	public String list(@ModelAttribute TExpenseAccount tExpenseAccountWhere, Model model) {
 		tExpenseAccountWhere.setOrder("ID desc");
 		PageResult<TExpenseAccount> tExpenseAccounts = tExpenseAccountService.findByTExpenseAccountWhere(tExpenseAccountWhere);
 		model.addAttribute("tExpenseAccounts", tExpenseAccounts);
 		return "texpenseaccount/list";
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TExpenseAccountWhere tExpenseAccountWhere, Model model) {
+	public String listJson(@ModelAttribute TExpenseAccount tExpenseAccountWhere, Model model) {
 		tExpenseAccountWhere.setOrder("ID desc");
 		PageResult<TExpenseAccount> tExpenseAccounts = tExpenseAccountService.findByTExpenseAccountWhere(tExpenseAccountWhere);
 		return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tExpenseAccounts)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tExpenseAccounts)*/
 				.toJson();
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/deleteById/json/{id}")
 	@ResponseBody
 	public String deleteJsonById(@PathVariable("id")Integer id) {

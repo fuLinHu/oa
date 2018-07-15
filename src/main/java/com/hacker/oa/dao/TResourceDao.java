@@ -14,9 +14,9 @@ public interface TResourceDao  {
 
 	TResource getById(Integer id);
     
-	//List<TResource> findByTResourceWhere(TResourceWhere tResourceWhere);
+	List<TResource> findByTResourceWhere(TResource tResourceWhere);
 	
-	//Long findTotalByTResourceWhere(TResourceWhere tResourceWhere);
+	Long findTotalByTResourceWhere(TResource tResourceWhere);
 	
 	
 }

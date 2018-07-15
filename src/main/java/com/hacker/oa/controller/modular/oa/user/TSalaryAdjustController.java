@@ -1,14 +1,13 @@
 package com.hacker.oa.controller.modular.oa.user;
 
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.DateEditor;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.TSalaryAdjust;
-import com.hacker.oa.entity.where.TSalaryAdjustWhere;
 import com.hacker.oa.service.TSalaryAdjustService;
 import java.util.Date;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import ldh.common.PageResult;
-import ldh.common.json.JsonViewFactory;
-import ldh.common.mvc.DateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -34,7 +33,7 @@ public class TSalaryAdjustController  {
 	protected void initBinder(HttpServletRequest request,  
 	                              ServletRequestDataBinder binder) throws Exception {  
 	    //对于需要转换为Date类型的属性，使用DateEditor进行处理  
-	    binder.registerCustomEditor(Date.class, new DateEditor());  
+	    binder.registerCustomEditor(Date.class, new DateEditor());
 	} 
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/all")
@@ -43,7 +42,7 @@ public class TSalaryAdjustController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String save(@ModelAttribute TSalaryAdjustWhere tSalaryAdjustWhere) throws Exception {
+    public String save(@ModelAttribute TSalaryAdjust tSalaryAdjustWhere) throws Exception {
     	Assert.notNull(tSalaryAdjustWhere);
 		TSalaryAdjust tSalaryAdjust = (TSalaryAdjust) tSalaryAdjustWhere;
     	if (tSalaryAdjustWhere.getId() == null) {
@@ -56,7 +55,7 @@ public class TSalaryAdjustController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TSalaryAdjustWhere tSalaryAdjustWhere) throws Exception {
+    public String saveJson(@ModelAttribute TSalaryAdjust tSalaryAdjustWhere) throws Exception {
     	Assert.notNull(tSalaryAdjustWhere);
     	TSalaryAdjust tSalaryAdjust = (TSalaryAdjust) tSalaryAdjustWhere;
     	if (tSalaryAdjustWhere.getId() == null) {
@@ -90,13 +89,13 @@ public class TSalaryAdjustController  {
     	Assert.notNull(id);
     	TSalaryAdjust tSalaryAdjust = tSalaryAdjustService.getById(id);
     	return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tSalaryAdjust)
+				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tSalaryAdjust)*/
 				.toJson();
     }
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public String list(@ModelAttribute TSalaryAdjustWhere tSalaryAdjustWhere, Model model) {
+	public String list(@ModelAttribute TSalaryAdjust tSalaryAdjustWhere, Model model) {
 		tSalaryAdjustWhere.setOrder("ID desc");
 		PageResult<TSalaryAdjust> tSalaryAdjusts = tSalaryAdjustService.findByTSalaryAdjustWhere(tSalaryAdjustWhere);
 		model.addAttribute("tSalaryAdjusts", tSalaryAdjusts);
@@ -105,12 +104,12 @@ public class TSalaryAdjustController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TSalaryAdjustWhere tSalaryAdjustWhere, Model model) {
+	public String listJson(@ModelAttribute TSalaryAdjust tSalaryAdjustWhere, Model model) {
 		tSalaryAdjustWhere.setOrder("ID desc");
 		PageResult<TSalaryAdjust> tSalaryAdjusts = tSalaryAdjustService.findByTSalaryAdjustWhere(tSalaryAdjustWhere);
 		return JsonViewFactory.create()
-				.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tSalaryAdjusts)
+			/*	.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tSalaryAdjusts)*/
 				.toJson();
 	}
 	

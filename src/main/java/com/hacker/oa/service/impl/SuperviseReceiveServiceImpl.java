@@ -1,13 +1,12 @@
 package com.hacker.oa.service.impl;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.dao.SuperviseReceiveDao;
 import com.hacker.oa.entity.SuperviseReceive;
-import com.hacker.oa.entity.where.SuperviseReceiveWhere;
 import com.hacker.oa.service.SuperviseReceiveService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +44,7 @@ public class SuperviseReceiveServiceImpl implements SuperviseReceiveService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	/*public PageResult<SuperviseReceive> findBySuperviseReceiveWhere(SuperviseReceiveWhere superviseReceiveWhere) {
+	public PageResult<SuperviseReceive> findBySuperviseReceiveWhere(SuperviseReceive superviseReceiveWhere) {
 		long total = superviseReceiveDao.findTotalBySuperviseReceiveWhere(superviseReceiveWhere);
 		List<SuperviseReceive> imageList = new ArrayList<SuperviseReceive>();
 		if (total > 0) {
@@ -53,7 +52,7 @@ public class SuperviseReceiveServiceImpl implements SuperviseReceiveService {
 		}
 		
 		return new PageResult<SuperviseReceive>(superviseReceiveWhere, total, imageList);
-	}*/
+	}
 	
 	
 }

@@ -1,13 +1,12 @@
 package com.hacker.oa.service.impl;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.dao.TSalaryDao;
 import com.hacker.oa.entity.TSalary;
-import com.hacker.oa.entity.where.TSalaryWhere;
 import com.hacker.oa.service.TSalaryService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +44,7 @@ public class TSalaryServiceImpl implements TSalaryService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public PageResult<TSalary> findByTSalaryWhere(TSalaryWhere tSalaryWhere) {
+	public PageResult<TSalary> findByTSalaryWhere(TSalary tSalaryWhere) {
 		long total = tSalaryDao.findTotalByTSalaryWhere(tSalaryWhere);
 		List<TSalary> imageList = new ArrayList<TSalary>();
 		if (total > 0) {

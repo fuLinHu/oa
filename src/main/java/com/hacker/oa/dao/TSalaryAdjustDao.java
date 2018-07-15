@@ -1,7 +1,6 @@
 package com.hacker.oa.dao;
 
 import com.hacker.oa.entity.TSalaryAdjust;
-import com.hacker.oa.entity.where.TSalaryAdjustWhere;
 import java.util.List;
 
 public interface TSalaryAdjustDao  {
@@ -14,9 +13,9 @@ public interface TSalaryAdjustDao  {
 
 	TSalaryAdjust getById(Integer id);
     
-	List<TSalaryAdjust> findByTSalaryAdjustWhere(TSalaryAdjustWhere tSalaryAdjustWhere);
+	List<TSalaryAdjust> findByTSalaryAdjustWhere(TSalaryAdjust tSalaryAdjustWhere);
 	
-	Long findTotalByTSalaryAdjustWhere(TSalaryAdjustWhere tSalaryAdjustWhere);
+	Long findTotalByTSalaryAdjustWhere(TSalaryAdjust tSalaryAdjustWhere);
 	
 	
 }

@@ -1,9 +1,11 @@
 package com.hacker.oa.entity;
 
+import com.hacker.oa.bean.BaseBean;
+
 import java.util.Date;
 
 
-public class TUser   {
+public class TUser   extends BaseBean {
 
 	private Integer userId;
 	private String userName;

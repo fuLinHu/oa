@@ -1,13 +1,12 @@
 package com.hacker.oa.service.impl;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.dao.TUserTaskDao;
 import com.hacker.oa.entity.TUserTask;
-import com.hacker.oa.entity.where.TUserTaskWhere;
 import com.hacker.oa.service.TUserTaskService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +44,7 @@ public class TUserTaskServiceImpl implements TUserTaskService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public PageResult<TUserTask> findByTUserTaskWhere(TUserTaskWhere tUserTaskWhere) {
+	public PageResult<TUserTask> findByTUserTaskWhere(TUserTask tUserTaskWhere) {
 		long total = tUserTaskDao.findTotalByTUserTaskWhere(tUserTaskWhere);
 		List<TUserTask> imageList = new ArrayList<TUserTask>();
 		if (total > 0) {

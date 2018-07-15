@@ -1,13 +1,12 @@
 package com.hacker.oa.service.impl;
 
+import com.hacker.oa.bean.PageResult;
 import com.hacker.oa.dao.TResourceDao;
 import com.hacker.oa.entity.TResource;
-import com.hacker.oa.entity.where.TResourceWhere;
 import com.hacker.oa.service.TResourceService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
-import ldh.common.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +44,7 @@ public class TResourceServiceImpl implements TResourceService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public PageResult<TResource> findByTResourceWhere(TResourceWhere tResourceWhere) {
+	public PageResult<TResource> findByTResourceWhere(TResource tResourceWhere) {
 		long total = tResourceDao.findTotalByTResourceWhere(tResourceWhere);
 		List<TResource> imageList = new ArrayList<TResource>();
 		if (total > 0) {

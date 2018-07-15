@@ -1,7 +1,6 @@
 package com.hacker.oa.dao;
 
 import com.hacker.oa.entity.TVacation;
-import com.hacker.oa.entity.where.TVacationWhere;
 import java.util.List;
 
 public interface TVacationDao  {
@@ -14,9 +13,9 @@ public interface TVacationDao  {
 
 	TVacation getById(Integer id);
     
-	List<TVacation> findByTVacationWhere(TVacationWhere tVacationWhere);
+	List<TVacation> findByTVacationWhere(TVacation tVacationWhere);
 	
-	Long findTotalByTVacationWhere(TVacationWhere tVacationWhere);
+	Long findTotalByTVacationWhere(TVacation tVacationWhere);
 	
 	
 }
