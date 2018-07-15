@@ -19,7 +19,6 @@ $(function(){
         }
     };
     function zTreeOnClick(event, treeId, treeNode) {
-        debugger
         var url = treeNode.data.url;
         if(url){
             alert(url);
