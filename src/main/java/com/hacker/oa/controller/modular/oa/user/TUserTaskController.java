@@ -76,8 +76,8 @@ public class TUserTaskController  {
     	Assert.notNull(id);
     	TUserTask tUserTask = tUserTaskService.getById(id);
     	return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tUserTask)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tUserTask)
 				.toJson();
     }
 	

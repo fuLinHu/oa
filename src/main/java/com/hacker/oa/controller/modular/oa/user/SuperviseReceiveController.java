@@ -89,8 +89,8 @@ public class SuperviseReceiveController  {
     	Assert.notNull(id);
     	SuperviseReceive superviseReceive = superviseReceiveService.getById(id);
     	return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", superviseReceive)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", superviseReceive)
 				.toJson();
     }
 	
@@ -108,8 +108,8 @@ public class SuperviseReceiveController  {
 		superviseReceiveWhere.setOrder("ID desc");
 		PageResult<SuperviseReceive> superviseReceives = superviseReceiveService.findBySuperviseReceiveWhere(superviseReceiveWhere);
 		return JsonViewFactory.create()
-				//.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				//.put("data", superviseReceives)
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", superviseReceives)
 				.toJson();
 	}
 	

@@ -89,8 +89,8 @@ public class TSalaryAdjustController  {
     	Assert.notNull(id);
     	TSalaryAdjust tSalaryAdjust = tSalaryAdjustService.getById(id);
     	return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tSalaryAdjust)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tSalaryAdjust)
 				.toJson();
     }
 	
@@ -108,8 +108,8 @@ public class TSalaryAdjustController  {
 		tSalaryAdjustWhere.setOrder("ID desc");
 		PageResult<TSalaryAdjust> tSalaryAdjusts = tSalaryAdjustService.findByTSalaryAdjustWhere(tSalaryAdjustWhere);
 		return JsonViewFactory.create()
-			/*	.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tSalaryAdjusts)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tSalaryAdjusts)
 				.toJson();
 	}
 	

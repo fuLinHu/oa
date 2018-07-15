@@ -89,8 +89,8 @@ public class TExpenseAccountController  {
     	Assert.notNull(id);
     	TExpenseAccount tExpenseAccount = tExpenseAccountService.getById(id);
     	return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tExpenseAccount)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tExpenseAccount)
 				.toJson();
     }
 	
@@ -108,8 +108,8 @@ public class TExpenseAccountController  {
 		tExpenseAccountWhere.setOrder("ID desc");
 		PageResult<TExpenseAccount> tExpenseAccounts = tExpenseAccountService.findByTExpenseAccountWhere(tExpenseAccountWhere);
 		return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tExpenseAccounts)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tExpenseAccounts)
 				.toJson();
 	}
 

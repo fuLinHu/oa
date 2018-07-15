@@ -94,8 +94,8 @@ public class TGroupResourceController  {
 		tGroupResourceWhere.setOrder("Id desc");
 		PageResult<TGroupResource> tGroupResources = tGroupResourceService.findByTGroupResourceWhere(tGroupResourceWhere);
 		return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tGroupResources)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tGroupResources)
 				.toJson();
 	}
 	

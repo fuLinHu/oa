@@ -89,8 +89,8 @@ public class TUserController  {
     	Assert.notNull(id);
     	TUser tUser = tUserService.getByUserId(id);
     	return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tUser)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tUser)
 				.toJson();
     }
 	
@@ -108,8 +108,8 @@ public class TUserController  {
 		tUserWhere.setOrder("USER_ID desc");
 		PageResult<TUser> tUsers = tUserService.findJoinByTUserWhere(tUserWhere);
 		return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tUsers)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tUsers)
 				.toJson();
 	}
 	

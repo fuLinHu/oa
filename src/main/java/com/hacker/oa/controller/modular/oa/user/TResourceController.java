@@ -94,8 +94,8 @@ public class TResourceController  {
 		tResourceWhere.setOrder("id desc");
 		PageResult<TResource> tResources = tResourceService.findByTResourceWhere(tResourceWhere);
 		return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tResources)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tResources)
 				.toJson();
 	}
 	

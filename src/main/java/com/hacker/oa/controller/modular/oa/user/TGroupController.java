@@ -76,8 +76,8 @@ public class TGroupController  {
     	Assert.notNull(id);
     	TGroup tGroup = tGroupService.getByGroupId(id);
     	return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tGroup)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tGroup)
 				.toJson();
     }
 	
@@ -95,8 +95,8 @@ public class TGroupController  {
 		tGroupWhere.setOrder("GROUP_ID desc");
 		PageResult<TGroup> tGroups = tGroupService.findByTGroupWhere(tGroupWhere);
 		return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tGroups)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tGroups)
 				.toJson();
 	}
 	

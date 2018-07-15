@@ -89,8 +89,8 @@ public class TVacationController  {
     	Assert.notNull(id);
     	TVacation tVacation = tVacationService.getById(id);
     	return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tVacation)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tVacation)
 				.toJson();
     }
 	
@@ -108,8 +108,8 @@ public class TVacationController  {
 		tVacationWhere.setOrder("ID desc");
 		PageResult<TVacation> tVacations = tVacationService.findByTVacationWhere(tVacationWhere);
 		return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tVacations)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tVacations)
 				.toJson();
 	}
 	
