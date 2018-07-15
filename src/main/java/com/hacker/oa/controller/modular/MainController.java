@@ -30,6 +30,7 @@ public class MainController {
             treeNode.setId(item.getId()+"");
             treeNode.setpId(item.getParentId()+"");
             treeNode.setName(item.getName());
+            treeNode.setData(item);
             treeList.add(treeNode);
         }
         return treeList;

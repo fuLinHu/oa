@@ -1,9 +1,13 @@
 package com.hacker.oa.bean;
 
+import com.hacker.oa.entity.TResource;
+
 public class TreeNode {
     private String id;
     private String pId;
     private String name;
+    private String url;
+    private TResource data;
 
     public String getId() {
         return id;
@@ -27,5 +31,21 @@ public class TreeNode {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public TResource getData() {
+        return data;
+    }
+
+    public void setData(TResource data) {
+        this.data = data;
     }
 }
