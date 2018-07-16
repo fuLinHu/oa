@@ -20,11 +20,23 @@ $(function(){
     };
     function zTreeOnClick(event, treeId, treeNode) {
         var url = treeNode.data.url;
+        var title=treeNode.name;
         if(url){
-            alert(url);
-        }else{
-            alert(treeNode.tId + ", " + treeNode.name);
+            addTab(title, url);
         }
     };
+    function addTab(title, url){
+        if ($('#tt').tabs('exists', title)){
+            $('#tt').tabs('select', title);
+        } else {
+            var url="main/test";
+            var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
+            $('#tt').tabs('add',{
+                title:title,
+                content:content,
+                closable:true
+            });
+        }
+    }
     $.fn.zTree.init($("#tree"), setting);
 })
