@@ -25,18 +25,20 @@ $(function(){
             addTab(title, url);
         }
     };
+    $.fn.zTree.init($("#tree"), setting);
+
     function addTab(title, url){
-        if ($('#tt').tabs('exists', title)){
-            $('#tt').tabs('select', title);
+        var tt=$(".easyui-tabs");
+        if (tt.tabs('exists', title)){
+            tt.tabs('select', title);
         } else {
-            var url="main/test";
             var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
-            $('#tt').tabs('add',{
+            tt.tabs('add',{
                 title:title,
                 content:content,
                 closable:true
             });
         }
     }
-    $.fn.zTree.init($("#tree"), setting);
+
 })
