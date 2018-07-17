@@ -37,6 +37,6 @@ public class MainController {
     }
     @RequestMapping("/test")
     public String testTab(){
-        return "/oa/test";
+        return "/test";
     }
 }

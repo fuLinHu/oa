@@ -13,6 +13,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -22,7 +23,7 @@ import java.util.List;
  * Created by liuruijie on 2017/4/20.
  * 模型管理
  */
-@RestController
+@Controller
 @RequestMapping("models")
 public class ModelerController {
 
@@ -36,8 +37,8 @@ public class ModelerController {
      * @return
      * @throws UnsupportedEncodingException
      */
-    @PostMapping("newModel")
-    public Object newModel() throws UnsupportedEncodingException {
+    @RequestMapping("newModel")
+    public String newModel() throws UnsupportedEncodingException {
         //初始化一个空模型
         Model model = repositoryService.newModel();
 
@@ -68,7 +69,7 @@ public class ModelerController {
                 "http://b3mn.org/stencilset/bpmn2.0#");
         editorNode.put("stencilset", stencilSetNode);
         repositoryService.addModelEditorSource(id,editorNode.toString().getBytes("utf-8"));
-        return ToWeb.buildResult().redirectUrl("/exporlter/activitiEdit?modelId="+id);
+        return "redirect:/activitiEdit?modelId="+id;
     }
 
 
