@@ -35,8 +35,4 @@ public class MainController {
         }
         return treeList;
     }
-    @RequestMapping("/test")
-    public String testTab(){
-        return "/test";
-    }
 }

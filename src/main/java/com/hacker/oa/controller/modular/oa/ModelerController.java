@@ -3,6 +3,8 @@ package com.hacker.oa.controller.modular.oa;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.entity.TExpenseAccount;
 import com.hacker.oa.util.Status;
 import com.hacker.oa.util.ToWeb;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
@@ -41,10 +43,10 @@ public class ModelerController {
     public String newModel() throws UnsupportedEncodingException {
         //初始化一个空模型
         Model model = repositoryService.newModel();
-
         //设置一些默认信息
         String name = "new-process";
         String description = "";
+
         int revision = 1;
         String key = "process";
 
@@ -52,26 +54,32 @@ public class ModelerController {
         modelNode.put(ModelDataJsonConstants.MODEL_NAME, name);
         modelNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION, description);
         modelNode.put(ModelDataJsonConstants.MODEL_REVISION, revision);
-
         model.setName(name);
         model.setKey(key);
         model.setMetaInfo(modelNode.toString());
-
         repositoryService.saveModel(model);
         String id = model.getId();
-
         //完善ModelEditorSource
         ObjectNode editorNode = objectMapper.createObjectNode();
         editorNode.put("id", "canvas");
         editorNode.put("resourceId", "canvas");
         ObjectNode stencilSetNode = objectMapper.createObjectNode();
-        stencilSetNode.put("namespace",
-                "http://b3mn.org/stencilset/bpmn2.0#");
+        stencilSetNode.put("namespace", "http://b3mn.org/stencilset/bpmn2.0#");
         editorNode.put("stencilset", stencilSetNode);
         repositoryService.addModelEditorSource(id,editorNode.toString().getBytes("utf-8"));
         return "redirect:/activitiEdit?modelId="+id;
     }
-
+    @RequestMapping("/pageList")
+    @ResponseBody
+    public Object getList(@RequestParam(value = "rowSize", defaultValue = "10", required = false) Integer rowSize, @RequestParam(value = "page", defaultValue = "1", required = false) Integer page) {
+        List<Model> list = repositoryService.createModelQuery().listPage(rowSize * (page - 1), rowSize);
+        long count = repositoryService.createModelQuery().count();
+        return list;
+    }
+    @RequestMapping("/modelList")
+    public String toModelList(){
+        return "/oa/modelList";
+    }
 
     /**
      * 发布模型为流程定义

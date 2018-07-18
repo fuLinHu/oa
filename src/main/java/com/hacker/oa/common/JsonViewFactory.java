@@ -9,16 +9,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JsonViewFactory {
-    /*JsonViewFactory.create()
-            .toJson();
-*/
+    public final String ERRORCODE="404";
+    public final String SUCCESSCODE="200";
+    private String message;
     private String DATA="data";
-    private String code;
-    private String success;
+    private String code="200";
+    private boolean success=true;
     private JSONObject jsonObject;
     public static final String Default_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private JsonConfig entryConfig;
     private static JsonViewFactory jsonViewFactory;
+
+
     public JsonViewFactory(){
         jsonObject = new JSONObject();
         entryConfig = new JsonConfig();
@@ -56,12 +58,19 @@ public class JsonViewFactory {
         this.code = code;
     }
 
-    public String getSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(String success) {
+    public void setSuccess(boolean success) {
         this.success = success;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
