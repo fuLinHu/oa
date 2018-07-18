@@ -41,7 +41,7 @@ public class TGroupResourceController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TGroupResource tGroupResourceWhere) throws Exception {
+    public Object saveJson(@ModelAttribute TGroupResource tGroupResourceWhere) throws Exception {
     	Assert.notNull(tGroupResourceWhere);
     	TGroupResource tGroupResource = (TGroupResource) tGroupResourceWhere;
     	if (tGroupResourceWhere.getId() == null) {
@@ -71,12 +71,12 @@ public class TGroupResourceController  {
     
     @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
     @ResponseBody
-    public String viewJson(@PathVariable Integer id, Model model) throws Exception {
+    public Object viewJson(@PathVariable Integer id, Model model) throws Exception {
     	Assert.notNull(id);
     	TGroupResource tGroupResource = tGroupResourceService.getById(id);
     	return JsonViewFactory.create()
-				/*.setDateFormat("yyyy-MM-dd hh:mm:ss")
-				.put("data", tGroupResource)*/
+				.setDateFormat("yyyy-MM-dd hh:mm:ss")
+				.put("data", tGroupResource)
 				.toJson();
     }
 	
@@ -90,7 +90,7 @@ public class TGroupResourceController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TGroupResource tGroupResourceWhere, Model model) {
+	public Object listJson(@ModelAttribute TGroupResource tGroupResourceWhere, Model model) {
 		tGroupResourceWhere.setOrder("Id desc");
 		PageResult<TGroupResource> tGroupResources = tGroupResourceService.findByTGroupResourceWhere(tGroupResourceWhere);
 		return JsonViewFactory.create()
@@ -101,7 +101,7 @@ public class TGroupResourceController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/deleteById/json/{id}")
 	@ResponseBody
-	public String deleteJsonById(@PathVariable("id")Integer id) {
+	public Object deleteJsonById(@PathVariable("id")Integer id) {
 		TGroupResource tgroupresource = tGroupResourceService.getById(id);
         Assert.notNull(tgroupresource);
 		tGroupResourceService.deleteById(id);

@@ -42,7 +42,7 @@ public class TGroupController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TGroup tGroupWhere) throws Exception {
+    public Object saveJson(@ModelAttribute TGroup tGroupWhere) throws Exception {
     	Assert.notNull(tGroupWhere);
     	TGroup tGroup = (TGroup) tGroupWhere;
     	if (tGroupWhere.getGroupId() == null) {
@@ -72,7 +72,7 @@ public class TGroupController  {
     
     @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
     @ResponseBody
-    public String viewJson(@PathVariable Integer id, Model model) throws Exception {
+    public Object viewJson(@PathVariable Integer id, Model model) throws Exception {
     	Assert.notNull(id);
     	TGroup tGroup = tGroupService.getByGroupId(id);
     	return JsonViewFactory.create()
@@ -91,7 +91,7 @@ public class TGroupController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TGroup tGroupWhere, Model model) {
+	public Object listJson(@ModelAttribute TGroup tGroupWhere, Model model) {
 		tGroupWhere.setOrder("GROUP_ID desc");
 		PageResult<TGroup> tGroups = tGroupService.findByTGroupWhere(tGroupWhere);
 		return JsonViewFactory.create()
@@ -102,7 +102,7 @@ public class TGroupController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/deleteByGroupId/json/{groupId}")
 	@ResponseBody
-	public String deleteJsonByGroupId(@PathVariable("groupId")Integer groupId) {
+	public Object deleteJsonByGroupId(@PathVariable("groupId")Integer groupId) {
 		TGroup tgroup = tGroupService.getByGroupId(groupId);
         Assert.notNull(tgroup);
 		tGroupService.deleteByGroupId(groupId);

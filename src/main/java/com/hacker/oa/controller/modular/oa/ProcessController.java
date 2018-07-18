@@ -55,34 +55,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class ProcessController {
 	private static final Logger logger = Logger.getLogger(ProcessController.class);
 
-	@Autowired
-	private RepositoryService repositoryService;
 
-	/**
-	 * 部署流程
-	 * @param modelId
-	 * @return
-	 */
-	@RequestMapping(value = "deploy/{id}")
-	@ResponseBody
-	public String deploy(@PathVariable("id") String modelId) {
-		JsonViewFactory jsonViewFactory = JsonViewFactory.create();
-		try {
-			Model modelData = repositoryService.getModel(modelId);
-			ObjectNode modelNode = (ObjectNode) new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelData.getId()));
-			byte[] bpmnBytes = null;
 
-			BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
-			bpmnBytes = new BpmnXMLConverter().convertToXML(model);
 
-			String processName = modelData.getName() + ".bpmn20.xml";
-			Deployment deployment = repositoryService.createDeployment().name(modelData.getName()).addString(processName, new String(bpmnBytes)).deploy();
-		} catch (Exception e) {
-			jsonViewFactory.setCode(jsonViewFactory.ERRORCODE);
-			jsonViewFactory.setSuccess(false);
-			logger.error("根据模型部署流程失败：modelId={}" + modelId, e);
-		}
-		return jsonViewFactory.toJson();
-	}
 
 }

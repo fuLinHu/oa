@@ -55,7 +55,7 @@ public class TExpenseAccountController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TExpenseAccount tExpenseAccountWhere) throws Exception {
+    public Object saveJson(@ModelAttribute TExpenseAccount tExpenseAccountWhere) throws Exception {
     	Assert.notNull(tExpenseAccountWhere);
     	TExpenseAccount tExpenseAccount = (TExpenseAccount) tExpenseAccountWhere;
     	if (tExpenseAccountWhere.getId() == null) {
@@ -85,7 +85,7 @@ public class TExpenseAccountController  {
     
    @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
     @ResponseBody
-    public String viewJson(@PathVariable Integer id, Model model) throws Exception {
+    public Object viewJson(@PathVariable Integer id, Model model) throws Exception {
     	Assert.notNull(id);
     	TExpenseAccount tExpenseAccount = tExpenseAccountService.getById(id);
     	return JsonViewFactory.create()
@@ -104,7 +104,7 @@ public class TExpenseAccountController  {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TExpenseAccount tExpenseAccountWhere, Model model) {
+	public Object listJson(@ModelAttribute TExpenseAccount tExpenseAccountWhere, Model model) {
 		tExpenseAccountWhere.setOrder("ID desc");
 		PageResult<TExpenseAccount> tExpenseAccounts = tExpenseAccountService.findByTExpenseAccountWhere(tExpenseAccountWhere);
 		return JsonViewFactory.create()
@@ -115,7 +115,7 @@ public class TExpenseAccountController  {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/deleteById/json/{id}")
 	@ResponseBody
-	public String deleteJsonById(@PathVariable("id")Integer id) {
+	public Object deleteJsonById(@PathVariable("id")Integer id) {
 		TExpenseAccount texpenseaccount = tExpenseAccountService.getById(id);
         Assert.notNull(texpenseaccount);
 		tExpenseAccountService.deleteById(id);

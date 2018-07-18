@@ -55,7 +55,7 @@ public class TUserController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TUser tUserWhere) throws Exception {
+    public Object saveJson(@ModelAttribute TUser tUserWhere) throws Exception {
     	Assert.notNull(tUserWhere);
     	TUser tUser = (TUser) tUserWhere;
     	if (tUserWhere.getUserId() == null) {
@@ -85,7 +85,7 @@ public class TUserController  {
     
     @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
     @ResponseBody
-    public String viewJson(@PathVariable Integer id, Model model) throws Exception {
+    public Object viewJson(@PathVariable Integer id, Model model) throws Exception {
     	Assert.notNull(id);
     	TUser tUser = tUserService.getByUserId(id);
     	return JsonViewFactory.create()
@@ -104,7 +104,7 @@ public class TUserController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TUser tUserWhere, Model model) {
+	public Object listJson(@ModelAttribute TUser tUserWhere, Model model) {
 		tUserWhere.setOrder("USER_ID desc");
 		PageResult<TUser> tUsers = tUserService.findJoinByTUserWhere(tUserWhere);
 		return JsonViewFactory.create()
@@ -115,7 +115,7 @@ public class TUserController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/deleteByUserId/json/{userId}")
 	@ResponseBody
-	public String deleteJsonByUserId(@PathVariable("userId")Integer userId) {
+	public Object deleteJsonByUserId(@PathVariable("userId")Integer userId) {
 		TUser tuser = tUserService.getByUserId(userId);
         Assert.notNull(tuser);
 		tUserService.deleteByUserId(userId);

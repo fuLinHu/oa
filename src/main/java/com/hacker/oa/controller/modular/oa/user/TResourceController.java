@@ -41,7 +41,7 @@ public class TResourceController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TResource tResourceWhere) throws Exception {
+    public Object saveJson(@ModelAttribute TResource tResourceWhere) throws Exception {
     	Assert.notNull(tResourceWhere);
     	TResource tResource = (TResource) tResourceWhere;
     	if (tResourceWhere.getId() == null) {
@@ -71,7 +71,7 @@ public class TResourceController  {
     
     @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
     @ResponseBody
-    public String viewJson(@PathVariable Integer id, Model model) throws Exception {
+    public Object viewJson(@PathVariable Integer id, Model model) throws Exception {
     	Assert.notNull(id);
     	TResource tResource = tResourceService.getById(id);
     	return JsonViewFactory.create()
@@ -90,7 +90,7 @@ public class TResourceController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TResource tResourceWhere, Model model) {
+	public Object listJson(@ModelAttribute TResource tResourceWhere, Model model) {
 		tResourceWhere.setOrder("id desc");
 		PageResult<TResource> tResources = tResourceService.findByTResourceWhere(tResourceWhere);
 		return JsonViewFactory.create()
@@ -101,7 +101,7 @@ public class TResourceController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/deleteById/json/{id}")
 	@ResponseBody
-	public String deleteJsonById(@PathVariable("id")Integer id) {
+	public Object deleteJsonById(@PathVariable("id")Integer id) {
 		TResource tresource = tResourceService.getById(id);
         Assert.notNull(tresource);
 		tResourceService.deleteById(id);

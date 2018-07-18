@@ -42,7 +42,7 @@ public class TUserTaskController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TUserTask tUserTaskWhere) throws Exception {
+    public Object saveJson(@ModelAttribute TUserTask tUserTaskWhere) throws Exception {
     	Assert.notNull(tUserTaskWhere);
     	TUserTask tUserTask = (TUserTask) tUserTaskWhere;
     	if (tUserTaskWhere.getId() == null) {
@@ -72,7 +72,7 @@ public class TUserTaskController  {
     
     @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
     @ResponseBody
-    public String viewJson(@PathVariable Integer id, Model model) throws Exception {
+    public Object viewJson(@PathVariable Integer id, Model model) throws Exception {
     	Assert.notNull(id);
     	TUserTask tUserTask = tUserTaskService.getById(id);
     	return JsonViewFactory.create()
@@ -91,7 +91,7 @@ public class TUserTaskController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TUserTask tUserTaskWhere, Model model) {
+	public Object listJson(@ModelAttribute TUserTask tUserTaskWhere, Model model) {
 		tUserTaskWhere.setOrder("ID desc");
 		PageResult<TUserTask> tUserTasks = tUserTaskService.findByTUserTaskWhere(tUserTaskWhere);
 		return JsonViewFactory.create()
@@ -102,7 +102,7 @@ public class TUserTaskController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/deleteById/json/{id}")
 	@ResponseBody
-	public String deleteJsonById(@PathVariable("id")Integer id) {
+	public Object deleteJsonById(@PathVariable("id")Integer id) {
 		TUserTask tusertask = tUserTaskService.getById(id);
         Assert.notNull(tusertask);
 		tUserTaskService.deleteById(id);

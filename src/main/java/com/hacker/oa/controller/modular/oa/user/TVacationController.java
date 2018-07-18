@@ -55,7 +55,7 @@ public class TVacationController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TVacation tVacationWhere) throws Exception {
+    public Object saveJson(@ModelAttribute TVacation tVacationWhere) throws Exception {
     	Assert.notNull(tVacationWhere);
     	TVacation tVacation = (TVacation) tVacationWhere;
     	if (tVacationWhere.getId() == null) {
@@ -85,7 +85,7 @@ public class TVacationController  {
     
     @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
     @ResponseBody
-    public String viewJson(@PathVariable Integer id, Model model) throws Exception {
+    public Object viewJson(@PathVariable Integer id, Model model) throws Exception {
     	Assert.notNull(id);
     	TVacation tVacation = tVacationService.getById(id);
     	return JsonViewFactory.create()
@@ -104,7 +104,7 @@ public class TVacationController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TVacation tVacationWhere, Model model) {
+	public Object listJson(@ModelAttribute TVacation tVacationWhere, Model model) {
 		tVacationWhere.setOrder("ID desc");
 		PageResult<TVacation> tVacations = tVacationService.findByTVacationWhere(tVacationWhere);
 		return JsonViewFactory.create()
@@ -115,7 +115,7 @@ public class TVacationController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/deleteById/json/{id}")
 	@ResponseBody
-	public String deleteJsonById(@PathVariable("id")Integer id) {
+	public Object deleteJsonById(@PathVariable("id")Integer id) {
 		TVacation tvacation = tVacationService.getById(id);
         Assert.notNull(tvacation);
 		tVacationService.deleteById(id);

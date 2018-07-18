@@ -55,7 +55,7 @@ public class SuperviseReceiveController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute SuperviseReceive superviseReceiveWhere) throws Exception {
+    public Object saveJson(@ModelAttribute SuperviseReceive superviseReceiveWhere) throws Exception {
     	Assert.notNull(superviseReceiveWhere);
     	SuperviseReceive superviseReceive = (SuperviseReceive) superviseReceiveWhere;
     	if (superviseReceiveWhere.getId() == null) {
@@ -85,7 +85,7 @@ public class SuperviseReceiveController  {
     
     @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
     @ResponseBody
-    public String viewJson(@PathVariable Integer id, Model model) throws Exception {
+    public Object viewJson(@PathVariable Integer id, Model model) throws Exception {
     	Assert.notNull(id);
     	SuperviseReceive superviseReceive = superviseReceiveService.getById(id);
     	return JsonViewFactory.create()
@@ -104,7 +104,7 @@ public class SuperviseReceiveController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute SuperviseReceive superviseReceiveWhere, Model model) {
+	public Object listJson(@ModelAttribute SuperviseReceive superviseReceiveWhere, Model model) {
 		superviseReceiveWhere.setOrder("ID desc");
 		PageResult<SuperviseReceive> superviseReceives = superviseReceiveService.findBySuperviseReceiveWhere(superviseReceiveWhere);
 		return JsonViewFactory.create()
@@ -115,7 +115,7 @@ public class SuperviseReceiveController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/deleteById/json/{id}")
 	@ResponseBody
-	public String deleteJsonById(@PathVariable("id")Integer id) {
+	public Object deleteJsonById(@PathVariable("id")Integer id) {
 		SuperviseReceive supervisereceive = superviseReceiveService.getById(id);
         Assert.notNull(supervisereceive);
 		superviseReceiveService.deleteById(id);

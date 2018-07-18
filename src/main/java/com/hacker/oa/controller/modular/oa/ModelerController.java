@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.hacker.oa.bean.PageResult;
+import com.hacker.oa.common.JsonViewFactory;
 import com.hacker.oa.entity.TExpenseAccount;
 import com.hacker.oa.util.Status;
 import com.hacker.oa.util.ToWeb;
@@ -14,6 +15,7 @@ import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,7 @@ import java.util.List;
 @Controller
 @RequestMapping("models")
 public class ModelerController {
+    private static final Logger logger = Logger.getLogger(ProcessController.class);
 
     @Autowired
     RepositoryService repositoryService;
@@ -80,86 +83,46 @@ public class ModelerController {
     public String toModelList(){
         return "/oa/modelList";
     }
-
     /**
-     * 发布模型为流程定义
-     * @param id
+     * 部署流程
+     * @param modelId
      * @return
-     * @throws Exception
      */
-    @PostMapping("{id}/deployment")
-    public Object deploy(@PathVariable("id")String id) throws Exception {
+    @RequestMapping(value = "deploy/{id}")
+    @ResponseBody
+    public Object deploy(@PathVariable("id") String modelId) {
+        JsonViewFactory jsonViewFactory = JsonViewFactory.create();
+        try {
+            Model modelData = repositoryService.getModel(modelId);
+            ObjectNode modelNode = (ObjectNode) new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelData.getId()));
+            byte[] bpmnBytes = null;
 
-        //获取模型
-        Model modelData = repositoryService.getModel(id);
-        byte[] bytes = repositoryService.getModelEditorSource(modelData.getId());
+            BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
+            bpmnBytes = new BpmnXMLConverter().convertToXML(model);
 
-        if (bytes == null) {
-            return ToWeb.buildResult().status(Status.FAIL)
-                    .msg("模型数据为空，请先设计流程并成功保存，再进行发布。");
+            String processName = modelData.getName() + ".bpmn20.xml";
+            Deployment deployment = repositoryService.createDeployment().name(modelData.getName()).addString(processName, new String(bpmnBytes)).deploy();
+        } catch (Exception e) {
+            jsonViewFactory.setStatus(jsonViewFactory.ERRORSTATUS);
+            jsonViewFactory.setSuccess(false);
+            jsonViewFactory.setMessage("根据模型部署流程失败!");
+            logger.error("根据模型部署流程失败：modelId={}" + modelId, e);
         }
-
-        JsonNode modelNode = new ObjectMapper().readTree(bytes);
-
-        BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
-        if(model.getProcesses().size()==0){
-            return ToWeb.buildResult().status(Status.FAIL)
-                    .msg("数据模型不符要求，请至少设计一条主线流程。");
+        return jsonViewFactory.toJson();
+    }
+    @RequestMapping(value = "delete/{modelId}")
+    @ResponseBody
+    public Object delete(@PathVariable("modelId") String modelId) {
+        JsonViewFactory jsonViewFactory = JsonViewFactory.create();
+        try {
+            repositoryService.deleteModel(modelId);
+            jsonViewFactory.setMessage("删除成功！");
+        } catch (Exception e) {
+            jsonViewFactory.setStatus(jsonViewFactory.ERRORSTATUS);
+            jsonViewFactory.setSuccess(false);
+            jsonViewFactory.setMessage("删除失败！");
         }
-        byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(model);
-
-        //发布流程
-        String processName = modelData.getName() + ".bpmn20.xml";
-        Deployment deployment = repositoryService.createDeployment()
-                .name(modelData.getName())
-                .addString(processName, new String(bpmnBytes, "UTF-8"))
-                .deploy();
-        modelData.setDeploymentId(deployment.getId());
-        repositoryService.saveModel(modelData);
-
-        return ToWeb.buildResult().refresh();
+        return jsonViewFactory.toJson();
     }
-
-    /*@Override
-    public Object getOne(@PathVariable("id") String id) {
-        Model model = repositoryService.createModelQuery().modelId(id).singleResult();
-        return ToWeb.buildResult().setObjData(model);
-    }*/
-
-    /*@Override
-    public Object getList(@RequestParam(value = "rowSize", defaultValue = "1000", required = false) Integer rowSize, @RequestParam(value = "page", defaultValue = "1", required = false) Integer page) {
-        List<Model> list = repositoryService.createModelQuery().listPage(rowSize * (page - 1)
-                , rowSize);
-        long count = repositoryService.createModelQuery().count();
-
-        return ToWeb.buildResult().setRows(
-                ToWeb.Rows.buildRows().setCurrent(page)
-                        .setTotalPages((int) (count/rowSize+1))
-                        .setTotalRows(count)
-                        .setList(list)
-                        .setRowSize(rowSize)
-        );
-    }*/
-
-    public Object deleteOne(@PathVariable("id")String id){
-        repositoryService.deleteModel(id);
-        return ToWeb.buildResult().refresh();
-    }
-
-  /*  @Override
-    public Object postOne(@RequestBody Model entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Object putOne(@PathVariable("id") String s, @RequestBody Model entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Object patchOne(@PathVariable("id") String s, @RequestBody Model entity) {
-        throw new UnsupportedOperationException();
-    }*/
-
 
 }

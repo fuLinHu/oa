@@ -28,11 +28,11 @@ $(function(){
         return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
     }
     //重新部署单个流程
-    function redeploy(){
+    deploy= function (){
         var row = $(table).datagrid('getSelected');
         if (row) {
             $.ajax({
-                url: '/modelAction/deploy/'+row.id,
+                url: baseUrl+'/deploy/'+row.id,
                 type: 'post',
                 dataType: 'json',
                 data: {},
@@ -40,6 +40,40 @@ $(function(){
                     $.messager.progress("close");
                     if (data.status) {
                         model_datagrid.datagrid("reload"); //reload the process data
+                    }
+                    $.messager.show({
+                        title : data.title,
+                        msg : data.message,
+                        timeout : 1000 * 2
+                    });
+                },
+                beforeSend:function(){
+                    $.messager.progress({
+                        title: '提示信息！',
+                        text: '数据处理中，请稍后....'
+                    });
+                },
+                complete: function(){
+                    $.messager.progress("close");
+                }
+            });
+        } else {
+            $.messager.alert("提示", "您未选择任何操作对象，请选择一行数据！");
+        }
+    }
+    del = function(){
+        debugger
+        var row = $(table).datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: baseUrl+ '/delete/'+row.id,
+                type: 'post',
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    $.messager.progress("close");
+                    if (data.status) {
+                        $(table).datagrid("reload"); //reload the process data
                     }
                     $.messager.show({
                         title : data.title,

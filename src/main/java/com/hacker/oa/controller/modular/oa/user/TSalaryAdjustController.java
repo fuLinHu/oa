@@ -55,7 +55,7 @@ public class TSalaryAdjustController  {
 
     @RequestMapping(method = RequestMethod.POST, value = "/save/json")
     @ResponseBody
-    public String saveJson(@ModelAttribute TSalaryAdjust tSalaryAdjustWhere) throws Exception {
+    public Object saveJson(@ModelAttribute TSalaryAdjust tSalaryAdjustWhere) throws Exception {
     	Assert.notNull(tSalaryAdjustWhere);
     	TSalaryAdjust tSalaryAdjust = (TSalaryAdjust) tSalaryAdjustWhere;
     	if (tSalaryAdjustWhere.getId() == null) {
@@ -85,7 +85,7 @@ public class TSalaryAdjustController  {
     
     @RequestMapping(method = RequestMethod.GET, value = "/view/json/{id}")
     @ResponseBody
-    public String viewJson(@PathVariable Integer id, Model model) throws Exception {
+    public Object viewJson(@PathVariable Integer id, Model model) throws Exception {
     	Assert.notNull(id);
     	TSalaryAdjust tSalaryAdjust = tSalaryAdjustService.getById(id);
     	return JsonViewFactory.create()
@@ -104,7 +104,7 @@ public class TSalaryAdjustController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/list/json")
 	@ResponseBody
-	public String listJson(@ModelAttribute TSalaryAdjust tSalaryAdjustWhere, Model model) {
+	public Object listJson(@ModelAttribute TSalaryAdjust tSalaryAdjustWhere, Model model) {
 		tSalaryAdjustWhere.setOrder("ID desc");
 		PageResult<TSalaryAdjust> tSalaryAdjusts = tSalaryAdjustService.findByTSalaryAdjustWhere(tSalaryAdjustWhere);
 		return JsonViewFactory.create()
@@ -115,7 +115,7 @@ public class TSalaryAdjustController  {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/deleteById/json/{id}")
 	@ResponseBody
-	public String deleteJsonById(@PathVariable("id")Integer id) {
+	public Object deleteJsonById(@PathVariable("id")Integer id) {
 		TSalaryAdjust tsalaryadjust = tSalaryAdjustService.getById(id);
         Assert.notNull(tsalaryadjust);
 		tSalaryAdjustService.deleteById(id);

@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JsonViewFactory {
-    public final String ERRORCODE="404";
-    public final String SUCCESSCODE="200";
+    public final String ERRORSTATUS="404";
+    public final String SUCCESSSTATUS="200";
     private String message;
     private String DATA="data";
-    private String code="200";
+    private String status="200";
     private boolean success=true;
     private JSONObject jsonObject;
     public static final String Default_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
@@ -24,13 +24,15 @@ public class JsonViewFactory {
     public JsonViewFactory(){
         jsonObject = new JSONObject();
         entryConfig = new JsonConfig();
+        jsonObject.put("status",status);
+        jsonObject.put("success",success);
     }
     public static JsonViewFactory  create(){
         jsonViewFactory = new JsonViewFactory();
         return jsonViewFactory;
     }
-    public static String toJson(){
-        return jsonViewFactory.jsonObject.toString();
+    public static JSONObject toJson(){
+        return jsonViewFactory.jsonObject;
     }
     public JsonViewFactory put(String key,Object obj){
         jsonObject.put(key,obj);
@@ -50,20 +52,16 @@ public class JsonViewFactory {
         }
         return jsonViewFactory;
     }
-    public String getCode() {
-        return code;
-    }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public boolean getSuccess() {
         return success;
     }
 
     public void setSuccess(boolean success) {
+
         this.success = success;
+        jsonObject.put("success",success);
     }
 
     public String getMessage() {
@@ -72,5 +70,15 @@ public class JsonViewFactory {
 
     public void setMessage(String message) {
         this.message = message;
+        jsonObject.put("message",message);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+        jsonObject.put("status",status);
     }
 }
